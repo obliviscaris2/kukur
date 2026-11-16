@@ -103,7 +103,7 @@ src/
 pipeline/               generators: osm/ (map tiles), terrain/ (DEM), blender/ (models), audio/ (sound bank)
 assets/                 GENERATED: map/, models/, audio/  — never hand-edit, re-run the pipeline
 tools/snap.mjs          headless test runner; tools/snaps/*.json are the test scripts
-docs/                   AGENTS (rules), CODEMAP (this), STORY, ARCHITECTURE, CONTENT_GUIDE, PIPELINE, ROADMAP
+docs/                   CODEMAP (this), STORY, ARCHITECTURE, CONTENT_GUIDE, PIPELINE, ROADMAP
 ```
 
 ## Events (core/events.js)
