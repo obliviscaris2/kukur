@@ -1,0 +1,125 @@
+[
+  {
+    "until": "window.__app",
+    "timeout": 60,
+    "label": "game booted"
+  },
+  {
+    "eval": "(async()=>{const {settings}=await import('./src/core/settings.js');settings.set('skipIntro',true);settings.set('prologueDone',true);await __app.play('Thamel');__app.storyCalm=true;__app.world.weather.set('sunny',true);__app.world.weather.hour=10;return {place:__app.at,traffic:__app.traffic.stats};})()",
+    "label": "Thamel free play"
+  },
+  {
+    "until": "__app.traffic.cars.length>=18",
+    "timeout": 35,
+    "label": "moving fleet fills the nearby streets"
+  },
+  {
+    "wait": 3
+  },
+  {
+    "eval": "(async()=>{const {boxOverlap}=await import('./src/core/collision.js'),a=__app,T=a.traffic;window.__flowAudit={jumps:0,overlaps:0,maxStep:0,frames:0};window.__trafficBefore=new Map(T.cars.map(c=>[c.id,{x:c.x,z:c.z}]));window.__trafficUpdate=T.update;T.update=function(dt,...args){const old=new Map(this.cars.map(c=>[c.id,{x:c.x,z:c.z}]));__trafficUpdate.call(this,dt,...args);__flowAudit.frames++;for(const c of this.cars){const p=old.get(c.id);if(p){const d=Math.hypot(c.x-p.x,c.z-p.z);__flowAudit.maxStep=Math.max(__flowAudit.maxStep,d);if(d>12*dt+.12)__flowAudit.jumps++;}}};window.__boxOverlap=boxOverlap;return {traffic:T.stats,people:a.npcs.people.length,roles:a.npcs.people.reduce((o,p)=>(o[p.role]=(o[p.role]||0)+1,o),{})};})()",
+    "label": "start real-frame traffic audit"
+  },
+  {
+    "shot": "traffic_thamel.png"
+  },
+  {
+    "wait": 9
+  },
+  {
+    "eval": "(()=>{const a=__app,T=a.traffic;T.update=__trafficUpdate;const tracked=T.cars.filter(c=>__trafficBefore.has(c.id)),moved=tracked.filter(c=>{const p=__trafficBefore.get(c.id);return Math.hypot(c.x-p.x,c.z-p.z)>1;}).length;let overlap=0,staticOverlap=0;for(let i=0;i<T.cars.length;i++){const c=T.cars[i];if(!Number.isFinite(c.x+c.z+c.heading))throw Error('Non-finite car');for(let j=i+1;j<T.cars.length;j++){const b=T.cars[j],hit=__boxOverlap({x:c.x,z:c.z,heading:c.heading,halfWidth:c.halfWidth,halfLength:c.halfLength},{x:b.x,z:b.z,heading:b.heading,halfWidth:b.halfWidth,halfLength:b.halfLength});if(hit&&hit.depth>.08)overlap++;}if(!a.world.physics.isBoxFree({x:c.x,z:c.z,y:c.y,heading:c.heading,halfWidth:c.halfWidth,halfLength:c.halfLength,height:c.height}))staticOverlap++;}const result={...T.stats,tracked:tracked.length,moved,overlap,staticOverlap,...__flowAudit};if(__flowAudit.jumps)throw Error('Traffic jumped: '+JSON.stringify(result));if(overlap)throw Error('Traffic overlaps: '+JSON.stringify(result));if(!Number.isFinite(a.pup.pos.x+a.pup.pos.y+a.pup.pos.z+a.camera.position.x))throw Error('Invalid player/camera position');if(a.npcs.people.some(p=>!p.collider||p.collider===p.body))throw Error('Pedestrian body registry aliases render mesh');if(T.stats.rendered!==T.cars.length)throw Error('Invisible cars');if(moved<Math.max(3,tracked.length*.2))throw Error('Traffic is stuck: '+JSON.stringify(result));return result;})()",
+    "label": "continuous motion, no overlaps or invisible vehicles"
+  },
+  {
+    "until": "__app.npcs.people.some(p=>p.role==='shopkeeper')",
+    "timeout": 20,
+    "label": "shopkeepers occupy open shops"
+  },
+  {
+    "eval": "(()=>{const a=__app,p=a.npcs.people.find(p=>p.role==='shopkeeper'),s=p.shop,nx=Math.sin(s.heading),nz=Math.cos(s.heading);if(a.world.physics.solidAt(p.pos.x,p.pos.y+.1,p.pos.z))throw Error('Keeper inside solid wall');a.pup.placeAt(s.entryX+nx*.25,s.entryZ+nz*.25,s.heading+Math.PI,a.world);a.cam.setShot(p.pos.clone().set(s.entryX+nx*3.3,s.y+1.2,s.entryZ+nz*3.3),p.pos.clone().add({x:0,y:.8,z:0}));const before=a.npcs.treats.list.length,reply=a.npcs.street.interact(a.pup);if(!reply)throw Error('Shop interaction unavailable');return {kind:s.kind,response:reply,treats:a.npcs.treats.list.length-before};})()",
+    "label": "real inset shop, steps and a friendly shopkeeper"
+  },
+  {
+    "wait": 0.6
+  },
+  {
+    "shot": "traffic_shop.png"
+  },
+  {
+    "eval": "(async()=>{const a=__app,d=a.world.gazetteer.destinations.find(p=>p.name==='Ratna Park');a.cam.clearShot();await a.respawnAt(d.x,d.z);const j=a.npcs.street.junctions.filter(j=>j.arms.some(arm=>arm[2]>=6)).sort((x,y)=>Math.hypot(x.x-d.x,x.z-d.z)-Math.hypot(y.x-d.x,y.z-d.z))[0];if(!j)throw Error('No arterial junction');await a.respawnAt(j.x,j.z);a.cam.snapBehind(a.pup);return {junction:[j.x,j.z],spawn:a.pup.pos.toArray()};})()",
+    "label": "busy arterial near Ratna Park"
+  },
+  {
+    "until": "__app.npcs.people.some(p=>p.role==='police'&&p.pos.distanceTo(__app.pup.pos)<100)",
+    "timeout": 30,
+    "label": "traffic police at a real junction"
+  },
+  {
+    "eval": "(()=>{const a=__app,p=a.npcs.people.find(p=>p.role==='police'&&p.pos.distanceTo(a.pup.pos)<100);a.pup.placeAt(p.pos.x+Math.sin(p.heading)*.9,p.pos.z+Math.cos(p.heading)*.9,p.heading+Math.PI,a.world);a.cam.setShot(p.pos.clone().add({x:2,y:1.0,z:2}),p.pos.clone().add({x:0,y:.9,z:0}));const reply=a.npcs.street.interact(a.pup);if(!p.signal.hold)throw Error('Officer did not stop traffic');return {reply,signal:p.signal,traffic:a.traffic.stats};})()",
+    "label": "request a safe crossing"
+  },
+  {
+    "wait": 0.5
+  },
+  {
+    "shot": "traffic_police.png"
+  },
+  {
+    "eval": "(async()=>{const a=__app;a.cam.clearShot();await a.respawnAt(676,-387);const P=a.pup,c=[...a.world.streamer.ready()].flatMap(t=>t.data.climbs||[]).sort((x,y)=>Math.hypot(x.x-P.pos.x,x.z-P.pos.z)-Math.hypot(y.x-P.pos.x,y.z-P.pos.z))[0];if(!c)throw Error('No climbing route in streamed tiles');a.state='paused';const fx=Math.sin(c.heading),fz=Math.cos(c.heading);P.placeAt(c.x-fx*.45,c.z-fz*.45,c.heading,a.world);P.cancelPose();const start=P.pos.y,input={axis:()=>({x:0,y:.65}),down:()=>false,hit:()=>false};for(let i=0;i<260&&P.pos.y<c.top-.05;i++)P.update(.025,input,{yaw:c.heading+Math.PI},a.world,0);const result={rise:P.pos.y-start,top:c.top,reached:P.pos.y};a.state='play';if(P.pos.y<c.top-.08)throw Error('Stair flight is not walkable: '+JSON.stringify(result));a.cam.snapBehind(P);return result;})()",
+    "label": "walk the actual compound-wall stair flight"
+  },
+  {
+    "until": "__app.traffic.cars.some(c=>c.waiting&&!c.merge)",
+    "timeout": 25,
+    "label": "a small curbside rider population"
+  },
+  {
+    "eval": "(()=>{const a=__app,c=a.traffic.cars.find(c=>c.waiting&&!c.merge);a.pup.placeAt(c.x+Math.cos(c.heading)*.9,c.z-Math.sin(c.heading)*.9,c.heading,a.world);const reply=a.traffic.interact(a.pup);if(!reply||c.waitT>3)throw Error('Rider did not acknowledge');return {reply,waiting:a.traffic.stats.waiting,moving:a.traffic.stats.moving};})()",
+    "label": "greet a waiting rider"
+  },
+  {
+    "until": "__app.npcs.people.some(p=>p.role==='kid'&&p.mode==='walk')",
+    "timeout": 30,
+    "label": "a schoolkid to play with"
+  },
+  {
+    "eval": "(()=>{const a=__app,p=a.npcs.people.find(p=>p.role==='kid'&&p.mode==='walk');window.__playKid=p;a.pup.placeAt(p.pos.x+Math.cos(p.heading)*.8,p.pos.z-Math.sin(p.heading)*.8,p.heading,a.world);a.npcs.street.interact(a.pup);if(!p.playSession)throw Error('Chase did not start');return 'Catch me!';})()",
+    "label": "start a chase"
+  },
+  {
+    "until": "window.__playKid.playSession?.age>2",
+    "timeout": 10,
+    "label": "schoolkid runs along the real street"
+  },
+  {
+    "eval": "(()=>{const a=__app,p=__playKid;a.pup.placeAt(p.pos.x+Math.cos(p.heading)*.8,p.pos.z-Math.sin(p.heading)*.8,p.heading,a.world);return 'tag';})()"
+  },
+  {
+    "until": "!__playKid.playSession&&__app.game.journal.counts.playChase>0",
+    "timeout": 8,
+    "label": "tag reward recorded"
+  },
+  {
+    "eval": "(()=>{const a=__app;a.cam.clearShot();const c=a.traffic.cars.find(c=>c.speed>1&&Math.hypot(c.x-a.pup.pos.x,c.z-a.pup.pos.z)<75);if(c){a.pup.placeAt(c.x+Math.cos(c.heading)*2.4,c.z-Math.sin(c.heading)*2.4,c.heading,a.world);a.cam.snapBehind(a.pup);}return a.traffic.stats;})()",
+    "label": "return to dog-eye street view"
+  },
+  {
+    "wait": 1.5
+  },
+  {
+    "until": "__app.cam.shotK<.002 && __app.cam.travel.route.length===0 && __app.camera.position.distanceTo(__app.pup.pos)<8",
+    "timeout": 15,
+    "label": "camera returned to normal street view"
+  },
+  {
+    "eval": "(()=>{const a=__app,p=a.pup.pos,c=a.camera.position,o=p.clone().setY(p.y+.34),clear=a.world.physics.sweepSphere(o,c,.1);if(clear<1)throw Error('Camera cannot see pup: '+JSON.stringify({p:p.toArray(),c:c.toArray(),clear}));return {pup:p.toArray(),camera:c.toArray(),distance:p.distanceTo(c),clear};})()",
+    "label": "follow camera has a clear view of the pup"
+  },
+  {
+    "shot": "traffic_final.png"
+  },
+  {
+    "eval": "(()=>{const R=__app.renderer,gl=R.renderer.getContext(),f=R.render;let ms=0,n=0;R.render=function(s){const t=performance.now();f.call(this,s);gl.finish();ms+=performance.now()-t;n++;};const t0=performance.now();return new Promise(resolve=>{(function g(){if(performance.now()-t0<3000)requestAnimationFrame(g);else{R.render=f;resolve({renderMs:+(ms/n).toFixed(1),drawCalls:R.renderer.info.render.calls,triangles:R.renderer.info.render.triangles,traffic:__app.traffic.stats,people:__app.npcs.people.length});}})();});})()",
+    "label": "busy city performance"
+  }
+]

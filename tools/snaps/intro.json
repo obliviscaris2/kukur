@@ -1,0 +1,9 @@
+[
+  { "wait": 16 },
+  { "eval": "__app.menu.cb.onPlay('Basantapur, Kathmandu'); 'intro'" },
+  { "wait": 3.5 }, { "shot": "intro_sky.png" },
+  { "wait": 6 }, { "shot": "intro_high.png" },
+  { "eval": "__app.intro && __app.intro.skip(); 'skip'" }, { "wait": 3 },
+  { "eval": "(() => { const r = __app.renderer.renderer.info.render; return { calls: r.calls, tris: r.triangles }; })()", "label": "stats" },
+  { "shot": "intro_play.png" }
+]

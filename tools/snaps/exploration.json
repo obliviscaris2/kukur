@@ -1,0 +1,23 @@
+[
+  {"until":"window.__app","timeout":120},
+  {"eval":"(async()=>{const a=__app,{settings}=await import('./src/core/settings.js');settings.set('skipIntro',true);await a.play(a.at);return a.state;})()","label":"enter gameplay"},
+  {"eval":"(async()=>{const m=await import('./tools/exploration-review.mjs');window.grove=await m.visitGrove(__app,'Ratna Park');return m.climbGrove(__app,grove);})()","label":"climb and discover through normal movement"},
+  {"eval":"__app.pup.control=false;__app.cam.placeBehind(__app.pup,__app.world.physics);'normal camera on the reached perch'"},
+  {"wait":3},
+  {"shot":"ratna-perch-gameplay.png"},
+  {"eval":"(async()=>{const m=await import('./tools/exploration-review.mjs');m.frameGrove(__app,grove,17);})()"},
+  {"wait":9},
+  {"shot":"ratna-grove-day.png"},
+  {"eval":"(async()=>{const {measureRender}=await import('./tools/render-perf.mjs');return measureRender(__app);})()","label":"grove GPU cost with all gameplay systems live"},
+  {"eval":"(async()=>{const {profileFrames}=await import('./tools/frame-profile.mjs');return profileFrames(__app,6);})()","label":"grove actual frame rate"},
+  {"eval":"__app.world.weather.hour=21; 'moonlight'"},
+  {"wait":3},
+  {"shot":"ratna-junkiris-night.png"},
+  {"eval":"(async()=>{const m=await import('./tools/exploration-review.mjs');window.grove=await m.visitGrove(__app,'Patan Durbar Square');const r=m.climbGrove(__app,grove);m.frameGrove(__app,grove,17);return r;})()","label":"Patan discovery"},
+  {"wait":9},
+  {"shot":"patan-grove.png"},
+  {"eval":"(async()=>{const m=await import('./tools/exploration-review.mjs');window.grove=await m.visitGrove(__app,'Bhaktapur Durbar Square');const r=m.climbGrove(__app,grove);m.frameGrove(__app,grove,17);return r;})()","label":"Bhaktapur discovery"},
+  {"wait":9},
+  {"shot":"bhaktapur-grove.png"},
+  {"eval":"(()=>{const g=__app.game.exploration,active=g.active;for(const id of __app.world.physics.owned.keys())if((id.startsWith('wish:')||id.startsWith('garden:'))&&!active.has(id))throw Error('Stale exploration collider '+id);return {found:[...g.found],active:active.size,particles:__app.world.weather.motes.count};})()","label":"streaming cleanup and bounded effects"}
+]

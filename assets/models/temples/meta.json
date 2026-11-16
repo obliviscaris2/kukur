@@ -1,0 +1,104 @@
+{
+ "pagoda1": {
+  "steps": 1,
+  "step_h": 0.08,
+  "inset": 0.19,
+  "core": 0.5,
+  "core_h": 0.45
+ },
+ "pagoda2": {
+  "steps": 3,
+  "step_h": 0.07,
+  "inset": 0.07666666666666667,
+  "core": 0.42,
+  "core_h": 0.35
+ },
+ "pagoda3": {
+  "steps": 5,
+  "step_h": 0.06,
+  "inset": 0.05,
+  "core": 0.38,
+  "core_h": 0.3
+ },
+ "trailokya": {
+  "steps": 5,
+  "step_h": 0.055,
+  "inset": 0.052000000000000005,
+  "core": 0.36,
+  "core_h": 0.28
+ },
+ "maju_dega": {
+  "steps": 9,
+  "step_h": 0.032,
+  "inset": 0.029999999999999995,
+  "core": 0.34,
+  "core_h": 0.19
+ },
+ "taleju": {
+  "steps": 12,
+  "step_h": 0.028,
+  "inset": 0.024166666666666666,
+  "core": 0.3,
+  "core_h": 0.16
+ },
+ "kasthamandap": {
+  "steps": 2,
+  "step_h": 0.025,
+  "inset": 0.04,
+  "core": 0.16,
+  "core_h": 0.13,
+  "pillars": 0.36
+ },
+ "nyatapola": {
+  "steps": 5,
+  "step_h": 0.075,
+  "inset": 0.057999999999999996,
+  "core": 0.3,
+  "core_h": 0.18
+ },
+ "pashupati_gold": {
+  "steps": 2,
+  "step_h": 0.06,
+  "inset": 0.10500000000000001,
+  "core": 0.46,
+  "core_h": 0.32
+ },
+ "shikhara": {
+  "steps": 3,
+  "step_h": 0.03,
+  "inset": 0.04,
+  "core": 0.5,
+  "core_h": 1.0
+ },
+ "stupa_boudha": {
+  "steps": 3,
+  "step_h": 0.025,
+  "inset": 0.06,
+  "core": 0.6,
+  "core_h": 1.0,
+  "round": true
+ },
+ "stupa_kathesimbhu": {
+  "steps": 2,
+  "step_h": 0.035,
+  "inset": 0.07,
+  "core": 0.52,
+  "core_h": 1.0,
+  "round": true
+ },
+ "stupa_small": {
+  "steps": 1,
+  "step_h": 0.035,
+  "inset": 0.07,
+  "core": 0.6,
+  "core_h": 1.0,
+  "round": true
+ },
+ "bell": {
+  "steps": 1,
+  "step_h": 0.08,
+  "inset": 0,
+  "core": 0.2,
+  "core_h": 1.0
+ }
+}

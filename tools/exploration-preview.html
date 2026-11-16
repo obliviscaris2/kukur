@@ -1,0 +1,46 @@
+<!doctype html>
+<!-- Saved real-game captures of the exploration, surface and motion update. -->
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>KUKUR · Little wonders</title>
+  <style>
+    *{box-sizing:border-box}body{margin:0;background:#142b30;color:#f5eddd;font:16px/1.65 system-ui,sans-serif}
+    main{max-width:1180px;margin:auto;padding:42px 24px}header{display:flex;align-items:center;justify-content:space-between;gap:24px}
+    h1{font:400 clamp(30px,5vw,50px)/1.2 Georgia,serif;margin:8px 0 16px}.eyebrow{color:#e8ca88;letter-spacing:.18em;font-size:12px;font-weight:700}
+    p{color:#c2d6cf;max-width:760px}a{color:#eed09c}.play{display:inline-block;white-space:nowrap;background:#edcf94;color:#173133;border-radius:8px;padding:12px 20px;font-weight:700;text-decoration:none}
+    nav{display:flex;flex-wrap:wrap;gap:8px;margin:28px 0 16px}button{font:inherit;padding:9px 16px;border:1px solid #597870;border-radius:22px;background:transparent;color:#d5e3d9;cursor:pointer}
+    button[aria-pressed=true]{background:#b5d7c3;color:#18322f;border-color:#b5d7c3}figure{margin:0}figure img{display:block;width:100%;border-radius:12px;border:1px solid #50685e;background:#1c353b}
+    figcaption{font-size:14px;color:#c2d6cf;padding:12px 0}.tiles{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin:32px 0}
+    .note{border-top:1px solid #46625b;padding-top:22px;font-size:14px}kbd{padding:2px 7px;border:1px solid #688177;border-radius:4px;color:#f4e3c5}a:focus-visible,button:focus-visible{outline:3px solid #edcf94;outline-offset:4px}
+    @media(max-width:700px){main{padding:24px 16px}header{align-items:flex-start;flex-direction:column}.tiles{grid-template-columns:1fr}}
+  </style>
+</head>
+<body><main>
+  <header><div><div class="eyebrow">KUKUR · EXPLORATION UPDATE</div><h1>Little wonders, under your paws.</h1><p>Worn paving, soft earth, climbing gardens and junkiris. These are captures from the running game.</p></div><a class="play" href="../?noprologue">Play KUKUR ↗</a></header>
+  <nav aria-label="Discovery location" id="locations"></nav>
+  <figure><img id="view" src="snaps/out/exploration-review/ratna-perch-gameplay.png" alt="The pup on a climbing stone with petals and sparkling lights"><figcaption id="caption">The normal player camera after climbing onto the perch. A first wish leaves a treat among the blossoms.</figcaption></figure>
+  <p><kbd>Space</kbd> hop and climb · <kbd>E</kbd> make a wish or rest · <kbd>F</kbd> bark to stir petals · <kbd>Q</kbd> sniff for discoveries. Use <kbd>M</kbd> to find Ratna Park, Patan or Bhaktapur.</p>
+  <div class="tiles">
+    <figure><img loading="lazy" src="snaps/out/exploration-smoke-final/smoke_play.png" alt="The street pup standing on painted rounded cobbles in Kathmandu"><figcaption>Small painted cobbles, clay, plaster and timber share a warmer palette. Ground and paving use the same rolling terrain surface.</figcaption></figure>
+    <figure><img loading="lazy" src="snaps/out/exploration-smoke-final/smoke_night_storm.png" alt="Kathmandu at night with rain and warm street lights"><figcaption>Streets remain readable at night. Junkiris, drifting petals and touch effects use fixed particle pools.</figcaption></figure>
+  </div>
+  <p class="note">The dog has a fuller silhouette, planted paws and gentler spine, head and tail follow-through. Stones, logs and benches have matching solid surfaces. This expands exploration around the valley; it does not make every decorative object interactive.</p>
+  <p class="note">Performance is still below a dependable 30 FPS on the Intel HD 4600. Recent 1280×720 busy-street samples measured 13–17 FPS; the later run used 163 draws and 533k triangles. Distant trees use simpler shading and fewer overlapping leaves; particle effects add no shadow lights. <a href="../docs/ART_DIRECTION.md">Validation and performance notes</a> · <a href="../pipeline/art/README.md">Painted asset sources</a></p>
+</main>
+<script>
+  const scenes=[
+    ['ratna-perch-gameplay','On the perch','The normal player camera after climbing onto the perch. A first wish leaves a treat among the blossoms.'],
+    ['ratna-grove-day','Ratna Park','A golden wish tree near Ratna Park. Climb the curved stone approach and press E on the perch.'],
+    ['ratna-junkiris-night','Junkiri night','Blinking junkiris gather around the grove, scatter from the pup, then settle back into the leaves.'],
+    ['patan-grove','Patan','A small discovery beside Patan’s streets, with rounded stones and flowering plants.'],
+    ['bhaktapur-grove','Bhaktapur','Wish trees also appear near safe discovery locations in Bhaktapur.']
+  ];
+  const nav=document.querySelector('#locations'),view=document.querySelector('#view'),caption=document.querySelector('#caption');
+  for(const [id,label,note] of scenes){
+    const button=document.createElement('button');button.textContent=label;button.type='button';button.setAttribute('aria-pressed',id===scenes[0][0]);
+    button.addEventListener('click',()=>{for(const b of nav.children)b.setAttribute('aria-pressed',b===button);view.src=`snaps/out/exploration-review/${id}.png`;view.alt=note;caption.textContent=note;});nav.append(button);
+  }
+</script></body>
+</html>

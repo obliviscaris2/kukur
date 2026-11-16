@@ -1,0 +1,40 @@
+{
+  "name": "kukur",
+  "version": "0.4.0",
+  "description": "A playful pup exploring a cartoon Kathmandu valley (Kathmandu, Lalitpur, Bhaktapur) built from OpenStreetMap.",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "node tools/dev-server.mjs",
+    "lint": "eslint src tools",
+    "check:movement": "node tools/check-movement.mjs",
+    "check:traffic": "node tools/check-traffic.mjs",
+    "format": "prettier --write \"src/**/*.js\" \"tools/**/*.mjs\" \"styles/**/*.css\" index.html",
+    "data:map": "PYTHONPATH=$HOME/.local/opt/pylibs $HOME/.local/opt/blender-5.3.0-linux-x64/5.3/python/bin/python3.13 pipeline/osm/build_tiles.py",
+    "assets:pup": "node tools/build-dogs.mjs",
+    "assets:people": "blender -b --factory-startup --python pipeline/blender/human.py",
+    "assets:temples": "blender -b --factory-startup --python pipeline/blender/temples.py",
+    "assets:all": "npm run assets:pup && npm run assets:people && npm run assets:temples && npm run assets:audio",
+    "snap": "node tools/snap.mjs http://localhost:5173/ tools/snaps/smoke.json",
+    "assets:audio": "python3 pipeline/audio/fetch_sounds.py",
+    "data:terrain": "python3 pipeline/terrain/build_terrain.py",
+    "check:threats": "node tools/check-threats.mjs",
+    "check:clearance": "node tools/check-clearance.mjs",
+    "check:graphics": "node tools/check-graphics.mjs",
+    "check:nature": "node tools/check-nature.mjs",
+    "assets:art": "node pipeline/art/build.mjs",
+    "check:rendering": "node tools/check-rendering.mjs",
+    "check:exploration": "node tools/check-exploration.mjs",
+    "build:static": "node tools/build-static.mjs"
+  },
+  "dependencies": {
+    "earcut": "^3.0.1",
+    "three": "0.160.0"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.39.0",
+    "eslint": "^9.39.0",
+    "globals": "^16.5.0",
+    "prettier": "^3.6.2"
+  }
+}

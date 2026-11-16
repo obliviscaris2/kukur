@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+  <title>Kukur — a pup in the Kathmandu valley</title>
+  <meta name="description" content="Play a pup exploring a colourful cartoon Kathmandu, Lalitpur and Bhaktapur built from OpenStreetMap.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐾</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&family=Mukta:wght@600;800&family=Cinzel:wght@500;700&family=Tiro+Devanagari+Hindi&family=Kalam:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles/base.css">
+  <link rel="stylesheet" href="styles/menu.css">
+  <link rel="stylesheet" href="styles/hud.css">
+  <!-- Bare imports resolve to node_modules (run `npm install` once). No build step needed. -->
+  <script type="importmap">
+    { "imports": { "three": "./node_modules/three/build/three.module.min.js", "three/addons/": "./node_modules/three/examples/jsm/" } }
+  </script>
+</head>
+<body>
+  <canvas id="game"></canvas>
+  <div id="vignette"></div>
+
+  <!-- in-game HUD -->
+  <div id="hud" class="hidden">
+    <div id="plaque"><div id="plTitle"></div><div id="plNe"></div><div id="plSub"></div><div id="plStreet" class="hidden"></div></div>
+    <div id="hearts"></div>
+    <div id="prompt"></div>
+    <div id="threat" aria-live="polite"></div>
+    <div id="objective"></div>
+    <div id="compassBox"><canvas id="compass" width="560" height="46"></canvas><div id="compassFocus"></div></div>
+    <div id="discover"><div id="dCap"></div><div id="dTitle"></div><div class="orn"><span></span>❖<span></span></div><div id="dNe"></div><div id="dSub"></div></div>
+    <div id="mapbox"><canvas id="minimap" width="190" height="190"></canvas>
+      <div id="clockrow"><span id="clock">06:00</span><span id="weatherLbl">☀️ Sunny</span></div></div>
+    <div id="stamina"><span>🐾</span><div class="track"><div id="stamFill"></div></div></div>
+    <div id="toast"></div>
+    <div id="debug" class="hidden"></div>
+    <div id="hint">WASD trot · Shift zoomies · Space hop (twice!) · X dash · F bark (hold: ROAR) · Q sniff · E pick up · G give · I bag · M map</div>
+    <div id="help" class="hidden"><h3>Being a pup</h3>
+      <p><b>WASD</b> trot · <b>Ctrl</b> walk · <b>Shift</b> zoomies · <b>Space</b> hop (temple steps!)</p>
+      <p><b>Mouse</b> look · <b>Wheel</b> zoom into the pup's eyes · <b>Tab</b> eye view</p>
+      <p><b>F</b> bark (other dogs want to play, pigeons do not) · <b>Q</b> sniff people's moods & offerings · <b>V</b> dog eyes</p>
+      <p><b>M</b> valley map · click to set a waypoint · <b>R</b> weather · <b>T</b> +1 hour · <b>F3</b> FPS · <b>Esc</b> pause</p></div>
+  </div>
+  <div id="bubbles"></div>
+  <div id="cards"></div>
+  <div id="skip" class="hidden">Space / click to skip</div>
+  <div id="fade"></div>
+
+  <div id="bigmap" class="hidden"></div>
+  <div id="bag" class="hidden"></div>
+  <div id="hurt"></div>
+  <div id="faint"><div class="t1"></div><div class="t2"></div></div>
+  <div id="menu" class="hidden"><div id="menuPanel" class="panel"></div></div>
+
+  <div id="loading">
+    <div class="logo">कुकुर</div><div class="paws">🐾</div>
+    <div class="bar"><div id="loadFill"></div></div><div id="loadText">Loading…</div>
+  </div>
+
+  <!-- touch controls (shown on phones/tablets) -->
+  <div id="touch" class="hidden">
+    <div id="joy"><div id="joyKnob"></div></div>
+    <div id="tbtns">
+      <button data-k="bark">Woof</button><button data-k="jump">Hop</button><button data-k="sniff">Sniff</button>
+      <button data-k="run">Zoom</button><button data-k="map" class="small">Map</button><button data-k="pause" class="small">II</button>
+    </div>
+  </div>
+
+  <script>if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(() => {});</script>
+  <script type="module" src="src/main.js"></script>
+</body>
+</html>

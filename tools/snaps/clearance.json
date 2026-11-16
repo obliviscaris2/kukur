@@ -1,0 +1,87 @@
+[
+  {
+    "until": "window.__app",
+    "timeout": 60,
+    "label": "game booted"
+  },
+  {
+    "eval": "(async()=>{const {settings}=await import('./src/core/settings.js');settings.set('skipIntro',true);await __app.play(__app.at);__app.storyCalm=true;__app.world.weather.set('sunny',true);__app.world.weather.hour=12;window.__clearance=await import('./tools/clearance-browser.mjs');return __app.state;})()",
+    "label": "free play"
+  },
+  {
+    "eval": "(async()=>{__app.state='paused';await __app.placeAt(\"Basantapur, Kathmandu\");__app.cam.clearShot();return __app.at;})()",
+    "label": "travel to Basantapur, Kathmandu"
+  },
+  {
+    "wait": 2
+  },
+  {
+    "eval": "(async()=>({terrain:__clearance.auditTerrain(__app),foundations:await __clearance.auditFoundations(__app),camera:__clearance.auditCamera(__app)}))()",
+    "label": "kathmandu geometry and flight checks"
+  },
+  {
+    "shot": "kathmandu_contact.png"
+  },
+  {
+    "eval": "(async()=>{__app.state='paused';await __app.placeAt(\"Patan Durbar Square, Lalitpur\");__app.cam.clearShot();return __app.at;})()",
+    "label": "travel to Patan Durbar Square, Lalitpur"
+  },
+  {
+    "wait": 2
+  },
+  {
+    "eval": "(async()=>({terrain:__clearance.auditTerrain(__app),foundations:await __clearance.auditFoundations(__app),camera:__clearance.auditCamera(__app)}))()",
+    "label": "patan geometry and flight checks"
+  },
+  {
+    "shot": "patan_contact.png"
+  },
+  {
+    "eval": "(async()=>{__app.state='paused';await __app.placeAt(\"Bhaktapur Durbar Square\");__app.cam.clearShot();return __app.at;})()",
+    "label": "travel to Bhaktapur Durbar Square"
+  },
+  {
+    "wait": 2
+  },
+  {
+    "eval": "(async()=>({terrain:__clearance.auditTerrain(__app),foundations:await __clearance.auditFoundations(__app),camera:__clearance.auditCamera(__app)}))()",
+    "label": "bhaktapur geometry and flight checks"
+  },
+  {
+    "shot": "bhaktapur_contact.png"
+  },
+  {
+    "eval": "(async()=>{__app.state='paused';await __app.placeAt(\"Boudhanath\");__app.cam.clearShot();return __app.at;})()",
+    "label": "travel to Boudhanath"
+  },
+  {
+    "wait": 2
+  },
+  {
+    "eval": "(async()=>({terrain:__clearance.auditTerrain(__app),foundations:await __clearance.auditFoundations(__app),camera:__clearance.auditCamera(__app)}))()",
+    "label": "boudha geometry and flight checks"
+  },
+  {
+    "shot": "boudha_contact.png"
+  },
+  {
+    "eval": "(async()=>{__app.state='paused';await __app.placeAt(\"Swayambhu\");__app.cam.clearShot();return __app.at;})()",
+    "label": "travel to Swayambhu"
+  },
+  {
+    "wait": 2
+  },
+  {
+    "eval": "(async()=>({terrain:__clearance.auditTerrain(__app),foundations:await __clearance.auditFoundations(__app),camera:__clearance.auditCamera(__app)}))()",
+    "label": "swayambhu geometry and flight checks"
+  },
+  {
+    "shot": "swayambhu_contact.png"
+  },
+  {
+    "eval": "__app.state='play';__app.cam.clearShot();'resume'"
+  },
+  {
+    "wait": 3
+  }
+]

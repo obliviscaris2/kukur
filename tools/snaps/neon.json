@@ -1,0 +1,31 @@
+[
+ {
+  "wait": 16
+ },
+ {
+  "eval": "__app.menu.cb.onPlay('Thamel'); window.__sk = setInterval(() => __app.intro && __app.intro.skip(), 200); 'go'"
+ },
+ {
+  "wait": 12
+ },
+ {
+  "eval": "(() => { clearInterval(window.__sk); const A = __app, N = A.world.neon; A.world.weather.hour = 20.8; A.world.weather.set('sunny', true); let best = null, bd = 1e9; for (const [k, v] of N.byTile) if (v.bulbs.length) for (let i = 0; i < v.bulbs.length; i += 4) { const d = Math.hypot(v.bulbs[i] - A.pup.pos.x, v.bulbs[i + 2] - A.pup.pos.z); if (d < bd) { bd = d; best = [v.bulbs[i], v.bulbs[i + 1], v.bulbs[i + 2]]; } } if (!best) return 'no bulbs'; const V = A.pup.pos.constructor; A.pup.placeAt(best[0] + 6, best[2] + 6, 0, A.world); A.cam.setShot(new V(best[0] + 14, best[1] + 9, best[2] + 14), new V(best[0], best[1] - 2, best[2])); return { bulbs: N.bulbs.count, signs: N.signs.count, nearest: bd.toFixed(0) }; })()",
+  "label": "neon"
+ },
+ {
+  "wait": 4
+ },
+ {
+  "shot": "neon_lane.png"
+ },
+ {
+  "eval": "(() => { const A = __app; A.cam.clearShot(); A.world.weather.hour = 11; return { vehicles: A.traffic.cars.length, within40: A.traffic.cars.filter((c) => Math.hypot(c.x - A.pup.pos.x, c.z - A.pup.pos.z) < 40).length }; })()",
+  "label": "traffic"
+ },
+ {
+  "wait": 3
+ },
+ {
+  "shot": "traffic_day.png"
+ }
+]

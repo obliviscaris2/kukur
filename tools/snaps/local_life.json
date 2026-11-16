@@ -1,0 +1,87 @@
+[
+  {
+    "until": "window.__app",
+    "timeout": 60,
+    "label": "game booted"
+  },
+  {
+    "eval": "(async()=>{const{settings}=await import('./src/core/settings.js');settings.set('skipIntro',true);settings.set('prologueDone',true);await __app.play(__app.at);__app.world.weather.set('sunny',true);__app.world.weather.hour=12;return{state:__app.state,houses:[...__app.world.streamer.ready()].reduce((n,t)=>n+(t.data.houses||[]).length,0)};})()",
+    "label": "start free play"
+  },
+  {
+    "eval": "(()=>{const a=__app,p=a.pup.pos;a.cam.setShot(p.clone().add({x:1.25,y:.65,z:1.1}),p.clone().add({x:0,y:.28,z:0}));return 'local dog profile';})()"
+  },
+  {
+    "wait": 0.8
+  },
+  {
+    "shot": "local_pup.png"
+  },
+  {
+    "eval": "(async()=>{const a=__app,{Stray}=await import('./src/entities/npc/Stray.js'),{rng}=await import('./src/core/rng.js');window.__localDogs=[];for(const[ i,breed]of['village','bhote','spitz'].entries()){const d=await Stray.create(rng(300+i),{breed,scale:1.25});d.pos.set(a.pup.pos.x+(i-1)*.9,a.pup.pos.y,a.pup.pos.z+1.5);d.stay(null);d.owned=true;a.scene.add(d.root);a.npcs.strays.push(d);__localDogs.push(d);}const p=a.pup.pos;a.cam.setShot(p.clone().add({x:2.2,y:1.0,z:3.4}),p.clone().add({x:0,y:.4,z:1.3}));return __localDogs.map(d=>d.breed);})()",
+    "label": "local silhouettes share a grounded canine rig"
+  },
+  {
+    "wait": 1
+  },
+  {
+    "shot": "local_variants.png"
+  },
+  {
+    "eval": "(async()=>{const a=__app,{Person}=await import('./src/entities/npc/Person.js'),{rng}=await import('./src/core/rng.js');window.__sensePeople=[];for(const[i,mood]of['cruel','neutral','kind'].entries()){const p=new Person(a.npcs.personGltf,rng(700+i),{role:'walker',mood});p.standAt(a.pup.pos.x+(i-1)*1.2,a.pup.pos.z+3,Math.PI);p.pos.y=a.world.heightAt(p.pos.x,p.pos.z);p.cool=p.lineT=1e9;if(mood==='cruel'){p.state='throw';p.stateT=20;}a.scene.add(p.root);a.npcs.people.push(p);__sensePeople.push(p);}window.__hostileDog=__localDogs[0];__hostileDog.terr={friendly:false,x:__hostileDog.pos.x,z:__hostileDog.pos.z,r:4};__hostileDog.tstate='warn';__hostileDog.greeted=true;__hostileDog.pose=null;a.cam.setShot(a.pup.pos.clone().add({x:3,y:1.1,z:5}),a.pup.pos.clone().add({x:0,y:.75,z:2}));return true;})()",
+    "label": "stage hostile, neutral and friendly behaviours"
+  },
+  {
+    "wait": 0.5
+  },
+  {
+    "eval": "(()=>{const s=__app.game.threats.aura.stats;if(s.danger<2||!s.good||!s.neutral)throw Error('Aura classifications missing: '+JSON.stringify(s));return s;})()",
+    "label": "fairy aura colours follow real behaviour"
+  },
+  {
+    "shot": "behaviour_auras.png"
+  },
+  {
+    "eval": "__app.game.scan.cool=0;__app.input.held.add('bark');'charge F'"
+  },
+  {
+    "until": "__app.game.scan.lastStunned>=2",
+    "timeout": 8,
+    "label": "charged roar stuns the attacking human and dog"
+  },
+  {
+    "eval": "(()=>{const a=__app;a.input.held.delete('bark');if(!__sensePeople[0].stunFor||!__hostileDog.stunFor)throw Error('Attacker not stunned');if(__sensePeople[1].stunFor||__sensePeople[2].stunFor)throw Error('Bystander stunned');return{stunned:a.game.scan.lastStunned,auras:a.game.threats.aura.stats,health:a.game.health.hearts};})()",
+    "label": "bystanders are protected; attacks interrupted"
+  },
+  {
+    "wait": 0.2
+  },
+  {
+    "shot": "roar_stun.png"
+  },
+  {
+    "eval": "(()=>{const a=__app;for(const p of __sensePeople){a.scene.remove(p.root);const i=a.npcs.people.indexOf(p);if(i>=0)a.npcs.people.splice(i,1);}for(const d of __localDogs){a.scene.remove(d.root);const i=a.npcs.strays.indexOf(d);if(i>=0)a.npcs.strays.splice(i,1);}a.cam.clearShot();a.storyCalm=true;window.__house=[...a.world.streamer.ready()].flatMap(t=>t.data.houses||[]).find(h=>!a.npcs.strays.some(d=>d.pos.distanceTo({x:h.entry.x,y:h.entry.y,z:h.entry.z})<3));if(!__house)throw Error('No reachable stair house');return{entry:__house.entry,flights:__house.route.length,deck:__house.deck};})()",
+    "label": "choose a streamed house stairwell"
+  },
+  {
+    "eval": "(async()=>{const a=__app,h=__house;await a.world.streamer.ensureAround(h.entry.x,h.entry.z,160);a.state='paused';let result,reply;const bodies=a.world.physics.bodies;a.world.physics.bodies=[];try{a.pup.placeAt(h.entry.x,h.entry.z,h.heading+Math.PI,a.world);a.pup.control=true;a.pup.cancelPose();for(const goal of h.route){for(let i=0;i<2500;i++){const dx=goal.x-a.pup.pos.x,dz=goal.z-a.pup.pos.z;if(Math.hypot(dx,dz)<.2&&Math.abs(a.pup.pos.y-goal.y)<.2)break;const heading=Math.atan2(dx,dz);a.pup.update(1/60,{axis:()=>({x:0,y:1}),down:()=>false,hit:()=>false,walk:true},{yaw:heading+Math.PI},a.world,0);}}result={y:a.pup.pos.y,roof:h.deck,pos:a.pup.pos.toArray()};if(Math.abs(a.pup.pos.y-h.deck)>.1)throw Error('House stairs blocked: '+JSON.stringify(result));a.game.rooftops.update(a.pup);reply=a.game.rooftops.interact(a.pup);if(!reply||!a.game.rooftops.saved[h.id]?.cache)throw Error('Rooftop basket unavailable');}finally{a.world.physics.bodies=bodies;a.state='play';}a.cam.setShot(a.pup.pos.clone().set(h.entry.x+Math.sin(h.heading)*6,h.entry.y+5,h.entry.z+Math.cos(h.heading)*6),a.pup.pos.clone().set(h.entry.x,h.entry.y+2.3,h.entry.z));return{...result,reply};})()",
+    "label": "walk from street through every house stair flight and search roof basket"
+  },
+  {
+    "wait": 0.5
+  },
+  {
+    "shot": "house_stairs.png"
+  },
+  {
+    "eval": "(async()=>{const a=__app,results=[];for(const name of['Patan Durbar Square, Lalitpur','Bhaktapur Durbar Square','Boudhanath']){await a.placeAt(name);const [x,z]=a.world.starts[name];const tiles=[...a.world.streamer.ready()].filter(t=>Math.hypot((t.tx+.5)*256-x,(t.tz+.5)*256-z)<400);const houses=tiles.flatMap(t=>t.data.houses||[]);if(!houses.length)throw Error('No stair houses in '+name);results.push({place:name,houses:houses.length});}a.cam.clearShot();a.cam.snapBehind(a.pup);a.storyCalm=false;return results;})()",
+    "label": "house routes are generated across the valley"
+  },
+  {
+    "wait": 5
+  },
+  {
+    "eval": "(()=>{const a=__app,R=a.renderer,gl=R.renderer.getContext(),f=R.render;let ms=0,n=0;R.render=function(s){const t=performance.now();f.call(this,s);gl.finish();ms+=performance.now()-t;n++;};const start=performance.now();return new Promise(resolve=>{(function sample(){if(performance.now()-start<3000)requestAnimationFrame(sample);else{R.render=f;resolve({renderMs:+(ms/n).toFixed(1),drawCalls:R.renderer.info.render.calls,triangles:R.renderer.info.render.triangles,aura:a.game.threats.aura.stats,people:a.npcs.people.length,dogs:a.npcs.strays.length});}})();});})()",
+    "label": "pooled magic performance"
+  }
+]

@@ -1,0 +1,125 @@
+[
+  {
+    "until": "window.__app",
+    "timeout": 60,
+    "label": "game booted"
+  },
+  {
+    "eval": "localStorage.removeItem('kukur.missions.v1'); document.querySelector('#menuPanel button.primary').click(); 'Play clicked'"
+  },
+  {
+    "wait": 4
+  },
+  {
+    "shot": "pf_0_opening.png"
+  },
+  {
+    "until": "__app.intro && __app.intro.aama && __app.state === 'play'",
+    "timeout": 60,
+    "label": "opening shot done, control given"
+  },
+  {
+    "wait": 1
+  },
+  {
+    "eval": "({ objective: document.querySelector('#objective').textContent, waypoint: __app.waypoint?.name, card: document.querySelector('#cards').textContent })",
+    "label": "1 go to aama"
+  },
+  {
+    "shot": "pf_1.png"
+  },
+  {
+    "eval": "(() => { const a = __app.intro.aama.pos; __app.pup.placeAt(a.x + 1, a.z + 1, 0, __app.world); return 'next to aama'; })()"
+  },
+  {
+    "wait": 3
+  },
+  {
+    "shot": "pf_2_blessing.png"
+  },
+  {
+    "until": "document.querySelector('#objective').textContent.includes('feast') && __app.npcs.treats.list.some((t) => t.landed)",
+    "timeout": 20,
+    "label": "feast dropped"
+  },
+  {
+    "shot": "pf_feast.png"
+  },
+  {
+    "eval": "(() => { const L = __app.npcs.treats.list; const go = () => { const u = L.filter((q) => q.landed); if (u[0]) __app.pup.placeAt(u[0].x, u[0].z, 0, __app.world); }; go(); setTimeout(go, 400); setTimeout(go, 800); return L.length + ' treats'; })()",
+    "label": "eat"
+  },
+  {
+    "until": "document.querySelector('#objective').textContent.includes('Curl up')",
+    "timeout": 20,
+    "label": "3 curl up"
+  },
+  {
+    "wait": 3
+  },
+  {
+    "shot": "pf_3_bed.png"
+  },
+  {
+    "eval": "(() => { const w = __app.waypoint; __app.pup.placeAt(w.x + 0.3, w.z + 0.3, 0, __app.world); __app.input.held.add('interact'); setTimeout(() => __app.input.held.delete('interact'), 400); return 'press E at ' + w.name; })()"
+  },
+  {
+    "until": "__app.intro.van && document.querySelector('#game').style.filter",
+    "timeout": 40,
+    "label": "4 morning (van + haze)"
+  },
+  {
+    "eval": "(async () => { const a=__app,v=a.intro.van,{TRAFFIC,PUP}=await import('./src/config/index.js'); const body=a.world.physics.bodies.flatMap(f=>f()).find(b=>b.x===v.position.x&&b.z===v.position.z&&b.height===TRAFFIC.storyVan.height); if(!body) throw Error('Story van has no solid body'); window.__storyVanBody=body; const f=v.position.clone().set(Math.sin(v.rotation.y),0,Math.cos(v.rotation.y)),q=v.position.clone().addScaledVector(f,4); a.world.physics.move(q,-f.x*6,-f.z*6,PUP.radius,{height:PUP.bodyHeight,heading:v.rotation.y,halfLength:PUP.bodyHalfLength}); const front=q.clone().sub(v.position).dot(f); if(front<TRAFFIC.storyVan.length/2+PUP.radius-0.02) throw Error('Can pass through story van'); return {solid:true,frontDistance:front}; })()",
+    "label": "story van blocks a swept player body"
+  },
+  {
+    "wait": 3
+  },
+  {
+    "shot": "pf_4_morning.png"
+  },
+  {
+    "until": "document.querySelector('#objective').textContent.includes('taking')",
+    "timeout": 30,
+    "label": "4b they're taking them (playable)"
+  },
+  {
+    "wait": 3
+  },
+  {
+    "shot": "pf_4b_take.png"
+  },
+  {
+    "until": "document.querySelector('#objective').textContent.includes('CHASE')",
+    "timeout": 40,
+    "label": "5 chase"
+  },
+  {
+    "key": "KeyW",
+    "hold": 2
+  },
+  {
+    "shot": "pf_5_chase.png"
+  },
+  {
+    "until": "__app.game.missions.activeId === 'aama' && !__app.intro.van?.parent",
+    "timeout": 60,
+    "label": "6 woke alone, mission tracked"
+  },
+  {
+    "until": "__app.state === 'play'",
+    "timeout": 40,
+    "label": "7 back in play"
+  },
+  {
+    "eval": "({ state: __app.state, objective: document.querySelector('#objective').textContent, waypoint: __app.waypoint?.name, filter: document.querySelector('#game').style.filter, strays: __app.npcs.strays.filter((s) => s.owned).length, calm: __app.storyCalm })",
+    "label": "end"
+  },
+  {
+    "shot": "pf_end.png"
+  },
+  {
+    "eval": "(() => { if(__app.world.physics.bodies.flatMap(f=>f()).includes(window.__storyVanBody)) throw Error('Story collider leaked after prologue'); return 'Story van collision cleaned up'; })()",
+    "label": "story collider removed on return to play"
+  }
+]

@@ -1,0 +1,12 @@
+[
+  { "wait": 16 },
+  { "eval": "__app.menu.cb.onPlay('Basantapur, Kathmandu'); 'intro'" },
+  { "wait": 4 }, { "shot": "art_intro.png" },
+  { "eval": "__app.intro && __app.intro.skip(); 'skip'" }, { "wait": 4 },
+  { "eval": "(() => { __app.world.weather.set('sunny', true); __app.world.weather.hour = 16; return __app.world.gazetteer.describe(__app.pup.pos.x, __app.pup.pos.z).title; })()", "label": "at" },
+  { "wait": 2 }, { "shot": "art_street.png" },
+  { "eval": "(() => { const R = __app.renderer, gl = R.renderer.getContext(), f = R.render; let ms = 0, n = 0; R.render = function (s) { const t = performance.now(); f.call(this, s); gl.finish(); ms += performance.now() - t; n++; }; const t0 = performance.now(); return new Promise((res) => { (function g() { if (performance.now() - t0 < 3000) requestAnimationFrame(g); else { R.render = f; res({ gpuMs: +(ms / n).toFixed(1), calls: R.renderer.info.render.calls, tris: R.renderer.info.render.triangles }); } })(); }); })()", "label": "perf" },
+  { "key": "KeyJ" }, { "wait": 0.8 }, { "shot": "art_journal.png" },
+  { "key": "KeyD" }, { "wait": 0.8 }, { "shot": "art_diary.png" },
+  { "key": "KeyJ" }
+]

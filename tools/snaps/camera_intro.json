@@ -1,0 +1,38 @@
+[
+  {
+    "until": "window.__app",
+    "timeout": 60,
+    "label": "game booted"
+  },
+  {
+    "eval": "(async()=>{const a=__app,{settings}=await import('./src/core/settings.js');settings.set('skipIntro',false);const audit=window.__introClearance={frames:0,errors:[]},original=a.cam.update; a.cam.update=function(...args){const before=a.camera.position.clone(),ph=a.world.physics,valid=ph.sweepSphere(before,before,.18)===1,ready=this.travel.ready;original.apply(this,args);const after=a.camera.position; audit.frames++;if(ph.sweepSphere(after,after,.16)<1&&audit.errors.length<10)audit.errors.push({kind:'endpoint',pos:after.toArray()});if(ready&&valid&&ph.sweepSphere(before,after,.16)<1&&audit.errors.length<10)audit.errors.push({kind:'travel',from:before.toArray(),to:after.toArray()});};const start=new URLSearchParams(location.search).get('introAt')||a.at;a.play(start);return 'opening aerial intro';})()",
+    "label": "watch the real opening camera"
+  },
+  {
+    "until": "__app.state==='intro'",
+    "timeout": 30
+  },
+  {
+    "wait": 8
+  },
+  {
+    "shot": "intro_valley.png"
+  },
+  {
+    "until": "__app.state==='play'",
+    "timeout": 90,
+    "label": "aerial intro gives control"
+  },
+  {
+    "until": "__app.cam.shotK<.002 && __app.cam.travel.route.length===0 && __app.camera.position.distanceTo(__app.pup.pos)<4",
+    "timeout": 20,
+    "label": "camera settles behind the dog"
+  },
+  {
+    "eval": "(()=>{const a=__app,audit=__introClearance,p=a.pup.pos;const clear=a.world.physics.sweepSphere(p.clone().setY(p.y+.34),a.camera.position,.12);if(audit.errors.length)throw Error(JSON.stringify(audit));if(clear<1)throw Error('Final pup view is occluded');return {frames:audit.frames,collisions:audit.errors.length,distance:a.camera.position.distanceTo(p),clear};})()",
+    "label": "camera flight and final view remain clear"
+  },
+  {
+    "shot": "intro_return.png"
+  }
+]

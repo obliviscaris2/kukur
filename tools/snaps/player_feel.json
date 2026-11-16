@@ -1,0 +1,108 @@
+[
+  {
+    "until": "window.__app",
+    "timeout": 60,
+    "label": "game booted"
+  },
+  {
+    "eval": "(async () => { const { settings } = await import('./src/core/settings.js'); settings.set('skipIntro', true); await __app.play(__app.at); __app.storyCalm = true; __app.traffic.max = 0; __app.traffic.clear(); __app.world.weather.set('sunny', true); __app.world.weather.hour = 14; window.__feelStart = __app.pup.pos.clone(); return __app.state; })()",
+    "label": "start free play (?noprologue)"
+  },
+  {
+    "until": "__app.state === 'play'",
+    "timeout": 10
+  },
+  {
+    "eval": "(() => { const p = __app.pup.pos; __app.cam.setShot(p.clone().add({x:1.2,y:0.65,z:1.2}), p.clone().add({x:0,y:0.25,z:0})); return 'side view'; })()"
+  },
+  {
+    "wait": 1
+  },
+  {
+    "shot": "feel_standing.png"
+  },
+  {
+    "eval": "(() => { const sizes = {}; for (const name of ['scooter', 'scooter2', 'taxi', 'car']) { const t = __app.traffic.types[name]; t.paint.geometry.computeBoundingBox(); t.trim.geometry.computeBoundingBox(); const b = t.paint.geometry.boundingBox.clone().union(t.trim.geometry.boundingBox); sizes[name] = b.max.clone().sub(b.min).toArray().map(x => +x.toFixed(2)); } if (sizes.scooter[0] > sizes.car[0] * 0.5 || sizes.scooter[2] > sizes.car[2] * 0.5) throw Error('Scooter too big'); return sizes; })()",
+    "label": "vehicle dimensions [width,height,length]"
+  },
+  {
+    "eval": "(() => { const a = __app, p = a.pup, P = a.world.physics, s = __feelStart; a.state = 'paused'; p.placeAt(s.x, s.z, 0, a.world); P.addBox('feel-wall', s.x, s.z + 1.3, 2, 0.02, 0, s.y + 2, s.y - 0.1); const input = {axis:()=>({x:0,y:1}), down:()=>false, hit:()=>false, run:true}; p.dashT = 0.32; for (let i=0;i<70;i++) p.update(0.05,input,{yaw:Math.PI},a.world,0); const dz=p.pos.z-s.z; P.removeOwner('feel-wall'); if(dz>0.97) throw Error('Dashed through wall: '+dz); p.placeAt(s.x,s.z,0,a.world); a.state='play'; return {wallDistance:dz, grounded:p.grounded}; })()",
+    "label": "dash stops whole body at a thin wall"
+  },
+  {
+    "eval": "__app.input.hits.add('jump'); __app.input.held.add('jump'); 'hop'"
+  },
+  {
+    "until": "!__app.pup.grounded && __app.pup.air > 0.06",
+    "timeout": 6,
+    "label": "real hop leaves the ground"
+  },
+  {
+    "shot": "feel_jump.png"
+  },
+  {
+    "eval": "__app.input.held.delete('jump'); 'release'"
+  },
+  {
+    "until": "__app.pup.grounded && __app.pup.air === 0",
+    "timeout": 8,
+    "label": "landed without hovering"
+  },
+  {
+    "eval": "(() => { const a=__app, p=a.pup, b=a.game.breakables, o=[...b.byTile.values()].flat().filter(o=>o.kind==='leafPile').sort((x,y)=>Math.hypot(x.x-p.pos.x,x.z-p.pos.z)-Math.hypot(y.x-p.pos.x,y.z-p.pos.z))[0]; if(!o) throw Error('No nearby leaves'); p.placeAt(o.x,o.z,0,a.world); p.cancelPose(); b._t=0; b.update(.016,p); a.cam.setShot(p.pos.clone().add({x:1.25,y:0.7,z:1.25}),p.pos.clone().add({x:0,y:0.2,z:0})); const r=b.interact(p); if(!a.game.journal.counts.leaves5) throw Error('Leaves did not react'); return {reaction:r.text,leafParticles:a.fx.p.filter(p=>p.alive&&p.kind===4).length}; })()",
+    "label": "pounce into leaves"
+  },
+  {
+    "wait": 0.2
+  },
+  {
+    "shot": "feel_leaves.png"
+  },
+  {
+    "eval": "(() => { const a=__app,p=a.pup,b=a.game.breakables,o=b.active.find(o=>o.kind==='garbageBag'||o.kind==='bin'); if(!o) throw Error('No nearby rubbish'); p.placeAt(o.x+0.6,o.z,0,a.world); p.cancelPose(); const r=b.interact(p); if(!a.game.journal.counts.rummage3) throw Error('Rummage was not recorded'); return r; })()",
+    "label": "rubbish can be investigated"
+  },
+  {
+    "eval": "(() => { const a=__app,b=a.game.breakables,o=[...b.byTile.values()].flat().filter(o=>o.kind==='can'&&!(o.cool>0)).sort((x,y)=>Math.hypot(x.x-a.pup.pos.x,x.z-a.pup.pos.z)-Math.hypot(y.x-a.pup.pos.x,y.z-a.pup.pos.z))[0]; if(!o) throw Error('No cans in streamed streets'); a.pup.placeAt(o.x-0.35,o.z,Math.PI/2,a.world); b._t=0; b.update(0.016,a.pup); b.knock({x:o.x-0.3,y:o.y,z:o.z},1,0,2,0.45); if(o.state!=='moving'||o.vx<=0) throw Error('Can did not move'); return {state:o.state,vx:o.vx}; })()",
+    "label": "a can rolls when kicked"
+  },
+  {
+    "eval": "(async () => { const a=__app,p=a.pup,s=__feelStart,T=await import('three'); a.state='paused'; a.traffic.clear(); p.placeAt(s.x,s.z,0,a.world); p.impact.cooldown=0; a.game.health.revive(); a.game.health.inv=0; const z=s.z-2.1,nav={pts:[s.x-2,z-50,s.x-2,z+50],w:8,kind:'residential'}; const c={type:'car',nav,dir:1,seg:0,t:0.5,segLen:100,x:s.x,z,y:s.y,tx:s.x,tz:z,heading:0,want:0,speed:6,max:6,honkT:0,wait:0,bob:0,jit:0,pass:0,pause:0,small:false,color:new T.Color('#56a6c7')}; a.traffic.cars=[c]; a.traffic.calm=false; a.storyCalm=false; a.state='play'; a.traffic.update(0.05,p); if(!p.impact.active) throw Error('Fast vehicle did not trigger tumble'); if(a.game.health.hearts!==2) throw Error('Vehicle damage was not applied once'); a.cam.setShot(p.pos.clone().add({x:2,y:0.8,z:2}),p.pos.clone().add({x:0,y:0.2,z:0})); return {tumbling:p.impact.active,hearts:a.game.health.hearts}; })()",
+    "label": "vehicle impact triggers articulated recovery"
+  },
+  {
+    "wait": 0.2
+  },
+  {
+    "shot": "feel_impact.png"
+  },
+  {
+    "eval": "__app.traffic.clear(); __app.storyCalm=true; 'traffic cleared after impact'"
+  },
+  {
+    "until": "!__app.pup.impact.active && __app.pup.grounded",
+    "timeout": 15,
+    "label": "pup recovered and can move again"
+  },
+  {
+    "eval": "(() => { const p=__app.pup, ground=__app.world.physics.groundAt(p.pos.x,p.pos.z,p.pos.y+0.05); if(Math.abs(p.pos.y-ground)>0.01) throw Error('Floating after recovery'); __app.cam.clearShot(); return {grounded:p.grounded,heightAboveGround:p.pos.y-ground,particles:__app.fx.live,particleCapacity:__app.fx.p.length}; })()",
+    "label": "final grounded state and bounded particles"
+  },
+  {
+    "shot": "feel_recovered.png"
+  },
+  {
+    "eval": "(async () => { const a=__app,{TRAFFIC}=await import('./src/config/index.js'); a.traffic.max=TRAFFIC.max[a.renderer.quality.npc]; a.traffic._t=0; a.pup.placeAt(__feelStart.x,__feelStart.z,0,a.world); a.cam.snapBehind(a.pup); a.pup.dog.setTihar(true); const ring=Object.values(a.pup.dog.bones).flatMap(b=>b.children).find(n=>n.isInstancedMesh&&n.count===16); if(!ring) throw Error('Garland was not instanced'); return {quality:a.renderer.quality.name,trafficLimit:a.traffic.max,garlandDrawCalls:1}; })()",
+    "label": "restore busy streets and check efficient garland"
+  },
+  {
+    "wait": 8
+  },
+  {
+    "eval": "(() => { const R=__app.renderer,gl=R.renderer.getContext(),render=R.render; let ms=0,n=0; R.render=function(s){const t=performance.now(); render.call(this,s); gl.finish(); ms+=performance.now()-t; n++;}; const start=performance.now(); return new Promise(resolve=>{(function sample(){if(performance.now()-start<3000) requestAnimationFrame(sample); else {R.render=render; resolve({renderMs:+(ms/n).toFixed(1),drawCalls:R.renderer.info.render.calls,triangles:R.renderer.info.render.triangles,vehicles:__app.traffic.cars.length,particleCapacity:__app.fx.p.length});}})();}); })()",
+    "label": "performance with post processing and normal traffic"
+  },
+  {
+    "shot": "feel_final_street.png"
+  }
+]

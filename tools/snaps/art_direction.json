@@ -1,0 +1,105 @@
+[
+  {
+    "until": "window.__app",
+    "timeout": 60,
+    "label": "game booted"
+  },
+  {
+    "eval": "(async()=>{const a=__app,{settings}=await import('./src/core/settings.js');settings.set('skipIntro',true);await a.play(a.at);a.storyCalm=true;a.pup.cancelPose();a.pup.control=false;a.traffic.max=0;a.traffic.clear();a.world.weather.set('sunny',true);a.pup.idle=0;a.cam.clearShot();a.cam.shotK=0;a.cam.travel.ready=false;a.cam.snapBehind(a.pup);return {at:a.at,p:a.pup.pos.toArray()};})()",
+    "label": "stable street framing"
+  },
+  {
+    "wait": 1.5
+  },
+  {
+    "eval": "(()=>{const a=__app;a.pup.cancelPose();a.pup.idle=0;a.state='play';a.world.weather.hour=12;a.world.weather.set('sunny',true);a.world.update(.016,a.pup.pos,a.camera,a.time);a.pup.animate(.016,a.world);return {night:a.world.sky.u.stars.value};})()",
+    "label": "day"
+  },
+  {
+    "wait": 1
+  },
+  {
+    "shot": "day_street.png"
+  },
+  {
+    "eval": "(()=>{const a=__app;a.pup.cancelPose();a.pup.idle=0;a.state='play';a.world.weather.hour=18.3333;a.world.weather.set('breezy',true);a.world.update(.016,a.pup.pos,a.camera,a.time);a.pup.animate(.016,a.world);return {night:a.world.sky.u.stars.value};})()",
+    "label": "dusk"
+  },
+  {
+    "wait": 1
+  },
+  {
+    "shot": "dusk_street.png"
+  },
+  {
+    "eval": "(async()=>{const {measureHero}=await import('./tools/art-scenes.mjs');const result=measureHero(__app);if(new URLSearchParams(location.search).has('verifyArt') && (result.contrast<1.5||result.warmth<1.1))throw Error('Hero readability below target: '+JSON.stringify(result));return result;})()",
+    "label": "dusk rendered hero contrast"
+  },
+  {
+    "eval": "(()=>{const a=__app;a.pup.cancelPose();a.pup.idle=0;a.state='play';a.world.weather.hour=22;a.world.weather.set('sunny',true);a.world.update(.016,a.pup.pos,a.camera,a.time);a.pup.animate(.016,a.world);return {night:a.world.sky.u.stars.value};})()",
+    "label": "night"
+  },
+  {
+    "wait": 1
+  },
+  {
+    "shot": "night_street.png"
+  },
+  {
+    "eval": "(async()=>{const {measureHero}=await import('./tools/art-scenes.mjs');const result=measureHero(__app);if(new URLSearchParams(location.search).has('verifyArt') && (result.contrast<1.5||result.warmth<1.1))throw Error('Hero readability below target: '+JSON.stringify(result));return result;})()",
+    "label": "night rendered hero contrast"
+  },
+  {
+    "eval": "(()=>{const a=__app;a.pup.cancelPose();a.pup.idle=0;a.state='play';a.world.weather.hour=21;a.world.weather.set('storm',true);a.world.update(.016,a.pup.pos,a.camera,a.time);a.pup.animate(.016,a.world);return {night:a.world.sky.u.stars.value};})()",
+    "label": "storm"
+  },
+  {
+    "wait": 1
+  },
+  {
+    "shot": "storm_street.png"
+  },
+  {
+    "eval": "(async()=>{const {measureHero}=await import('./tools/art-scenes.mjs');const result=measureHero(__app);if(new URLSearchParams(location.search).has('verifyArt') && (result.contrast<1.5||result.warmth<1.1))throw Error('Hero readability below target: '+JSON.stringify(result));return result;})()",
+    "label": "storm rendered hero contrast"
+  },
+  {
+    "eval": "(()=>{const a=__app;a.world.weather.hour=18.3333;a.world.weather.set('breezy',true);a.world.update(.016,a.pup.pos,a.camera,a.time);a.pup.cancelPose();a.pup.idle=0;const p=a.pup.pos;a.cam.setShot(p.clone().add({x:1.25,y:.65,z:.95}),p.clone().add({x:0,y:.3,z:0}));return 'portrait';})()"
+  },
+  {
+    "wait": 3
+  },
+  {
+    "shot": "dusk_portrait.png"
+  },
+  {
+    "eval": "(async()=>{window.__artReview=await import('./tools/art-scenes.mjs');return __artReview.stageDogs(__app);})()",
+    "label": "local coats at night"
+  },
+  {
+    "wait": 3
+  },
+  {
+    "shot": "night_coats.png"
+  },
+  {
+    "eval": "__artReview.stagePeople(__app)",
+    "label": "people stay readable at night"
+  },
+  {
+    "wait": 3
+  },
+  {
+    "shot": "night_people.png"
+  },
+  {
+    "eval": "(async()=>{const a=__app;a.state='play';await a.placeAt('Pashupatinath');a.world.weather.hour=18.3333;a.world.weather.set('breezy',true);a.world.update(.016,a.pup.pos,a.camera,a.time);a.pup.cancelPose();a.pup.idle=0;a.cam.clearShot();a.cam.snapBehind(a.pup);return {p:a.pup.pos.toArray()};})()",
+    "label": "river district dusk"
+  },
+  {
+    "wait": 2
+  },
+  {
+    "shot": "river_dusk.png"
+  }
+]

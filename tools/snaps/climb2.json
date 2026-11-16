@@ -1,0 +1,35 @@
+[
+ {
+  "wait": 16
+ },
+ {
+  "eval": "__app.menu.cb.onPlay('Basantapur, Kathmandu'); window.__sk = setInterval(() => __app.intro && __app.intro.skip(), 200); 'go'"
+ },
+ {
+  "wait": 12
+ },
+ {
+  "eval": "(() => { clearInterval(window.__sk); __app.pup.placeAt(690, -440, 0, __app.world); return __app.world.prepare(690, -440).then(() => 'near walls'); })()",
+  "label": "tp"
+ },
+ {
+  "wait": 2
+ },
+ {
+  "eval": "(() => { clearInterval(window.__sk); const A = __app, q = A.pup.pos; A.world.weather.hour = 10; let best = null; for (const t of A.world.streamer.ready()) for (const s of t.data.solids) { const g = A.world.heightAt(s.pts[0][0], s.pts[0][1]), h = s.h - g; if (h > 1.8 && h < 2.6 && s.pts.length === 4) { const cx = (s.pts[0][0] + s.pts[2][0]) / 2, cz = (s.pts[0][1] + s.pts[2][1]) / 2, d = Math.hypot(cx - q.x, cz - q.z); if (!best || d < best.d) best = { cx, cz, d, s }; } } if (!best) return 'no wall'; const a = best.s.pts[0], b = best.s.pts[1], ux = b[0] - a[0], uz = b[1] - a[1], L = Math.hypot(ux, uz), nx = -uz / L, nz = ux / L; window.__wall = best; window.__go = (off) => { A.pup.placeAt(best.cx + nx * off, best.cz + nz * off, Math.atan2(-nx, -nz), A.world); A.cam.snapBehind(A.pup); }; __go(3.2); return 'wall ' + best.d.toFixed(0) + 'm top ' + best.s.h.toFixed(1); })()",
+  "label": "wall"
+ },
+ {
+  "wait": 0.8
+ },
+ {
+  "eval": "(() => { const A = __app; window.__log = []; for (const e of ['hop','hop2','climb','scramble','land']) A.constructor && 0; const ev = window.__ev; const t0 = performance.now(); window.__iv = setInterval(() => { const P = A.world.physics, q = A.pup.pos, f = A.pup.forward(); __log.push([((performance.now()-t0)/1000).toFixed(2), q.y.toFixed(2), A.pup.grounded ? 'g' : 'a', A.pup.speed.toFixed(1), P.solidAt(q.x + f.x*0.42, q.y + 0.15, q.z + f.z*0.42) ? 'WALL' : '-', A.pup.mantle ? 'M' : '', A.pup.scrambled ? 'S' : '', A.pup.doubled ? 'D' : ''].join(' ')); }, 100); A.input.held.add('up'); setTimeout(() => { A.input.hits.add('jump'); A.input.held.add('jump'); }, 1500); setTimeout(() => { A.input.hits.add('jump'); }, 1850); setTimeout(() => { A.input.held.delete('jump'); }, 2300); return 'go'; })()"
+ },
+ {
+  "wait": 3.6
+ },
+ {
+  "eval": "(() => { clearInterval(__iv); __app.input.held.delete('up'); return __log.join(' | '); })()",
+  "label": "log"
+ }
+]

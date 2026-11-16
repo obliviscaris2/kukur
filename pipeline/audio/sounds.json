@@ -1,0 +1,265 @@
+{
+  "_doc": "Sound bank. Every sound is CC0 from freesound.org (ids). mode: oneshot | segments (file is split into separate hits) | loop. gain 0..1. len: keep only the first N seconds. Run: python3 pipeline/audio/fetch_sounds.py",
+  "pup_bark": {
+    "ids": [
+      583142,
+      800278,
+      270586
+    ],
+    "mode": "segments",
+    "gain": 0.85
+  },
+  "pup_yelp": {
+    "ids": [
+      452180
+    ],
+    "mode": "segments",
+    "gain": 0.75
+  },
+  "pup_whine": {
+    "ids": [
+      350593,
+      827539
+    ],
+    "mode": "segments",
+    "gain": 0.55
+  },
+  "pup_shake": {
+    "ids": [
+      827540
+    ],
+    "mode": "oneshot",
+    "gain": 0.8
+  },
+  "pup_pant": {
+    "ids": [
+      841349
+    ],
+    "mode": "loop",
+    "gain": 0.3
+  },
+  "stray_bark": {
+    "ids": [
+      420449,
+      420452,
+      535457
+    ],
+    "mode": "segments",
+    "gain": 0.8
+  },
+  "stray_growl": {
+    "ids": [
+      829986
+    ],
+    "mode": "oneshot",
+    "gain": 0.7
+  },
+  "stray_howl": {
+    "ids": [
+      276085
+    ],
+    "mode": "oneshot",
+    "gain": 0.55
+  },
+  "bell": {
+    "ids": [
+      837376,
+      837373
+    ],
+    "mode": "oneshot",
+    "gain": 0.5
+  },
+  "bell_big": {
+    "ids": [
+      760049
+    ],
+    "mode": "oneshot",
+    "gain": 0.8,
+    "len": 14
+  },
+  "bowl": {
+    "ids": [
+      535950
+    ],
+    "mode": "oneshot",
+    "gain": 0.7
+  },
+  "conch": {
+    "ids": [
+      78974
+    ],
+    "mode": "oneshot",
+    "gain": 0.45
+  },
+  "gong": {
+    "ids": [
+      473523
+    ],
+    "mode": "oneshot",
+    "gain": 0.8,
+    "len": 12
+  },
+  "taiko": {
+    "ids": [
+      486140,
+      577408
+    ],
+    "mode": "oneshot",
+    "gain": 1.0
+  },
+  "boom": {
+    "ids": [
+      755054
+    ],
+    "mode": "oneshot",
+    "gain": 0.75
+  },
+  "chant": {
+    "ids": [
+      456914
+    ],
+    "mode": "loop",
+    "gain": 0.5
+  },
+  "crows": {
+    "ids": [
+      452714
+    ],
+    "mode": "loop",
+    "gain": 0.45
+  },
+  "crow": {
+    "ids": [
+      813114
+    ],
+    "mode": "oneshot",
+    "gain": 0.45
+  },
+  "pigeons": {
+    "ids": [
+      689998
+    ],
+    "mode": "oneshot",
+    "gain": 0.6
+  },
+  "city": {
+    "ids": [
+      273962
+    ],
+    "mode": "loop",
+    "gain": 0.45
+  },
+  "city_busy": {
+    "ids": [
+      263631
+    ],
+    "mode": "loop",
+    "gain": 0.4
+  },
+  "scooter_pass": {
+    "ids": [
+      584302
+    ],
+    "mode": "segments",
+    "gain": 0.5
+  },
+  "horn": {
+    "ids": [
+      827215,
+      563346,
+      721413
+    ],
+    "mode": "segments",
+    "gain": 0.4
+  },
+  "horn_bus": {
+    "ids": [
+      371450
+    ],
+    "mode": "segments",
+    "gain": 0.4
+  },
+  "rain": {
+    "ids": [
+      679176
+    ],
+    "mode": "loop",
+    "gain": 0.6
+  },
+  "wind": {
+    "ids": [
+      817192
+    ],
+    "mode": "loop",
+    "gain": 0.5
+  },
+  "thunder": {
+    "ids": [
+      559804,
+      477839
+    ],
+    "mode": "oneshot",
+    "gain": 0.9
+  },
+  "splash": {
+    "ids": [
+      538143
+    ],
+    "mode": "segments",
+    "gain": 0.9
+  },
+  "paddle": {
+    "ids": [
+      679400
+    ],
+    "mode": "loop",
+    "gain": 0.4
+  },
+  "smash": {
+    "ids": [
+      810043,
+      583310,
+      565642
+    ],
+    "mode": "segments",
+    "gain": 0.8
+  },
+  "crate": {
+    "ids": [
+      66780,
+      443293
+    ],
+    "mode": "segments",
+    "gain": 0.7
+  },
+  "clonk": {
+    "ids": [
+      405655,
+      667654
+    ],
+    "mode": "segments",
+    "gain": 0.6
+  },
+  "whoosh": {
+    "ids": [
+      786514,
+      449996
+    ],
+    "mode": "oneshot",
+    "gain": 0.7
+  },
+  "pickup": {
+    "ids": [
+      735168
+    ],
+    "mode": "oneshot",
+    "gain": 0.5
+  },
+  "dig": {
+    "ids": [
+      651292
+    ],
+    "mode": "oneshot",
+    "gain": 0.8
+  }
+}

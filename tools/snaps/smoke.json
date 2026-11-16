@@ -1,0 +1,47 @@
+[
+  {
+    "until": "window.__app",
+    "timeout": 120,
+    "label": "boot (map tiles + models)"
+  },
+  {
+    "eval": "typeof window.__app",
+    "label": "app ready"
+  },
+  {
+    "eval": "(async()=>{const {settings}=await import('./src/core/settings.js');settings.set('prologueDone',true);settings.set('skipIntro',true);await __app.play('Basantapur, Kathmandu');return {state:__app.state,gpu:__app.renderer.gpu};})()",
+    "label": "enter normal gameplay"
+  },
+  {
+    "until": "__app.state==='play' && __app.npcs.people.length>=30",
+    "timeout": 60,
+    "label": "busy street ready"
+  },
+  {
+    "wait": 5
+  },
+  {
+    "eval": "({ people: __app.npcs.people.length, strays: __app.npcs.strays.length, vehicles: __app.traffic.cars.length, sounds: Object.keys(__app.audio.banks).length, place: __app.world.gazetteer.describe(__app.pup.pos.x, __app.pup.pos.z).title })",
+    "label": "state"
+  },
+  {
+    "shot": "smoke_play.png"
+  },
+  {
+    "eval": "(async()=>{const {measureRender}=await import('./tools/render-perf.mjs');return measureRender(__app);})()",
+    "label": "perf"
+  },
+  {
+    "eval": "(async()=>{const {profileFrames}=await import('./tools/frame-profile.mjs');return profileFrames(__app,6);})()",
+    "label": "actual frame cadence and CPU costs"
+  },
+  {
+    "eval": "__app.world.weather.hour = 21; __app.world.weather.set('storm', true); 'night storm'"
+  },
+  {
+    "wait": 5
+  },
+  {
+    "shot": "smoke_night_storm.png"
+  }
+]

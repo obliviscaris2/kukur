@@ -1,0 +1,8 @@
+[
+  { "wait": 16 },
+  { "eval": "__app.menu.cb.onPlay('Basantapur, Kathmandu'); window.__sk = setInterval(() => __app.intro && __app.intro.skip(), 200); 'go'" },
+  { "wait": 10 },
+  { "eval": "(() => { clearInterval(window.__sk); const A = __app, V = A.pup.pos.constructor, q = A.pup.pos.clone(); A.world.weather.hour = 10.5; const f = A.pup.forward(); const c = q.clone().add(f.clone().multiplyScalar(4)); A.npcs.strays.forEach((s, i) => { const k = i - (A.npcs.strays.length - 1) / 2; s.root.position.set(c.x + f.z * k * 1.1, q.y, c.z - f.x * k * 1.1); s.state = 'nap'; s.stateT = 60; s.greeted = true; s.pose = null; s.heading = Math.atan2(-f.x, -f.z); s.root.rotation.y = s.heading; s.root.visible = true; }); A.cam.setShot(q.clone().add(f.clone().multiplyScalar(1.2)).setY(q.y + 1.3), c.clone().setY(q.y + 0.3)); return A.npcs.strays.length + ' strays'; })()", "label": "lineup" },
+  { "wait": 1.5 },
+  { "shot": "dogs_lineup.png" }
+]

@@ -1,0 +1,10 @@
+[
+  { "wait": 16 },
+  { "eval": "__app.menu.cb.onPlay('Thamel'); window.__sk = setInterval(() => __app.intro && __app.intro.skip(), 200); 'go'" },
+  { "wait": 12 },
+  { "eval": "(() => { clearInterval(window.__sk); const A = __app; A.world.weather.set('sunny', true); A.world.weather.hour = 15.5; return 'afternoon'; })()" },
+  { "wait": 2 }, { "shot": "look_street.png" },
+  { "eval": "(() => { const A = __app, V = A.pup.pos.constructor, q = A.pup.pos; A.cam.setShot(new V(q.x + 40, q.y + 38, q.z + 50), new V(q.x, q.y, q.z)); return 'aerial'; })()" },
+  { "wait": 3 }, { "shot": "look_aerial.png" },
+  { "eval": "(() => { const R = __app.renderer, gl = R.renderer.getContext(), f = R.render; let ms = 0, n = 0; R.render = function (s) { const t = performance.now(); f.call(this, s); gl.finish(); ms += performance.now() - t; n++; }; const t0 = performance.now(); return new Promise((res) => { (function g() { if (performance.now() - t0 < 3000) requestAnimationFrame(g); else { R.render = f; res({ gpuMs: +(ms / n).toFixed(1), calls: R.renderer.info.render.calls, tris: R.renderer.info.render.triangles }); } })(); }); })()", "label": "perf" }
+]

@@ -1,0 +1,7 @@
+[
+  { "wait": 16 },
+  { "eval": "document.querySelector('#menuPanel button.primary')?.click(); 'clicked Play'" },
+  { "wait": 2 }, { "eval": "document.body.click(); 'extra click'" },
+  { "wait": 4 },
+  { "eval": "({ scene: __app.intro?.constructor.name, skipped: !!__app.intro?.skipped, state: __app.state, hour: __app.world.weather.hour.toFixed(1) })", "label": "after Play" }
+]

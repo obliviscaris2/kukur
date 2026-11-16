@@ -1,0 +1,118 @@
+/* In-game HUD, speech bubbles and touch controls. */
+#hud { position: fixed; inset: 0; pointer-events: none; z-index: 5; }
+/* location plaque (top-left): storybook-dark ribbon with marigold trim */
+#plaque { position: absolute; left: 18px; top: 16px; max-width: min(46vw, 460px); padding: 8px 20px 9px 16px; color: var(--parch);
+  background: linear-gradient(90deg, rgba(24, 17, 42, 0.78), rgba(24, 17, 42, 0.45) 75%, transparent); border-left: 3px solid var(--gold); border-radius: 4px; }
+#plTitle { font-family: var(--title); font-weight: 700; font-size: 25px; letter-spacing: 0.04em; line-height: 1.1; text-shadow: 0 2px 6px rgba(0, 0, 0, 0.6); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+#plNe { font-family: var(--deva-title); font-size: 17px; color: var(--gold); line-height: 1.2; }
+#plNe:empty { display: none; }
+#plSub { font-size: 13px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; opacity: 0.75; }
+#plStreet { margin-top: 3px; font-size: 14px; font-weight: 700; color: #ffe9b8; }
+#plStreet:before { content: '⟡ '; color: var(--gold); }
+
+/* compass strip (top-centre) */
+#compassBox { position: absolute; left: 50%; top: 10px; transform: translateX(-50%); text-align: center; }
+#compass { width: 560px; height: 46px; display: block; max-width: 70vw; }
+#compassFocus { font-family: var(--title); font-size: 14px; font-weight: 700; color: var(--parch); text-shadow: 0 2px 4px rgba(0, 0, 0, 0.7); min-height: 18px; letter-spacing: 0.05em; }
+
+/* discovery banner (Skyrim-dark: smoky band, silver serif, gold ornament) */
+#discover { position: absolute; left: 0; right: 0; top: 17%; padding: 26px 0 22px; text-align: center; color: #eceae4; opacity: 0; pointer-events: none; white-space: nowrap;
+  background: radial-gradient(ellipse 46% 100% at 50% 50%, rgba(4, 3, 8, 0.82), rgba(4, 3, 8, 0.55) 55%, transparent 100%);
+  text-shadow: 0 2px 2px rgba(0, 0, 0, 0.9), 0 0 18px rgba(0, 0, 0, 0.8); }
+#discover.on { animation: discover 5s ease-in-out forwards; }
+@keyframes discover { 0% { opacity: 0; filter: blur(6px); } 16% { opacity: 1; filter: blur(0); } 78% { opacity: 1; } 100% { opacity: 0; filter: blur(3px); } }
+#dCap { font-family: var(--title); font-size: 13px; letter-spacing: 0.7em; text-transform: uppercase; color: #c9a45c; min-height: 16px; margin-bottom: 4px; }
+#dTitle { font-family: var(--title); font-weight: 500; font-size: clamp(32px, 5vw, 60px); letter-spacing: 0.14em; text-transform: uppercase; line-height: 1.05;
+  color: #efece6; text-shadow: 0 1px 0 #ffffff55, 0 3px 4px rgba(0, 0, 0, 0.95), 0 0 22px rgba(0, 0, 0, 0.7); }
+#discover .orn { display: flex; align-items: center; justify-content: center; gap: 12px; color: #c9a45c; font-size: 12px; margin: 8px 0 6px; }
+#discover .orn span { width: 170px; height: 1px; background: linear-gradient(90deg, transparent, #c9a45c 40%, #f2dfa8 50%, #c9a45c 60%, transparent); }
+#dNe { font-family: var(--deva-title); font-size: 24px; color: #d9c08a; letter-spacing: 0.05em; }
+#dSub { margin-top: 2px; font-family: var(--title); font-size: 13px; font-weight: 500; letter-spacing: 0.35em; text-transform: uppercase; color: #b8b2a6; }
+
+#mapbox { position: absolute; right: 18px; top: 16px; text-align: center; }
+#minimap { width: 190px; height: 190px; border-radius: 50%; border: 5px solid var(--ink); box-shadow: 0 6px 0 var(--ink); background: #e9dcc4; display: block; }
+#clockrow { margin-top: 10px; display: inline-flex; gap: 8px; background: var(--cream); border: 3px solid var(--ink); border-radius: 20px; padding: 2px 12px; font-weight: 800; font-size: 15px; box-shadow: 0 3px 0 var(--ink); }
+#stamina { position: absolute; left: 50%; bottom: 34px; transform: translateX(-50%); display: flex; align-items: center; gap: 8px; opacity: 0; transition: opacity 0.3s; }
+#stamina.show { opacity: 1; }
+#stamina .track { width: 170px; height: 14px; border-radius: 10px; border: 3px solid var(--ink); background: #fff; overflow: hidden; }
+#stamFill { height: 100%; background: linear-gradient(90deg, #ffcc29, #ff9f1c); }
+#toast { position: absolute; left: 50%; top: 92px; transform: translateX(-50%) scale(0.6); opacity: 0; background: var(--cream); border: 4px solid var(--ink); border-radius: 20px;
+  padding: 4px 16px; font-weight: 800; font-size: 18px; box-shadow: 0 4px 0 var(--ink); transition: transform 0.25s cubic-bezier(0.2, 1.6, 0.4, 1), opacity 0.2s; }
+#toast.on { opacity: 1; transform: translateX(-50%) scale(1); }
+#debug { position: absolute; left: 18px; bottom: 12px; font: 600 13px monospace; color: #fff; background: rgba(0, 0, 0, 0.45); padding: 3px 8px; border-radius: 8px; }
+#hint { position: absolute; left: 50%; bottom: 8px; transform: translateX(-50%); font-size: 13px; font-weight: 700; color: #fff; text-shadow: 0 2px 0 rgba(0, 0, 0, 0.4); white-space: nowrap; animation: fadeout 2s 16s forwards; }
+@keyframes fadeout { to { opacity: 0; } }
+#help { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); background: var(--cream); border: 5px solid var(--ink); border-radius: 24px; padding: 14px 26px; box-shadow: 0 8px 0 var(--ink); max-width: 92vw; }
+#help h3 { margin: 0 0 6px; color: var(--red); } #help p { margin: 4px 0; }
+
+#bubbles { position: fixed; inset: 0; pointer-events: none; z-index: 6; }
+.bubble { position: absolute; transform: translate(-50%, -100%) scale(0.4); opacity: 0; background: #fff; border: 4px solid var(--ink); border-radius: 18px; padding: 1px 12px;
+  font-weight: 800; font-size: 19px; white-space: nowrap; transition: transform 0.25s cubic-bezier(0.2, 1.6, 0.4, 1), opacity 0.2s; font-family: var(--font), var(--deva); }
+.bubble.on { opacity: 1; transform: translate(-50%, -100%) scale(1); }
+.bubble:after { content: ''; position: absolute; left: 40%; bottom: -14px; border: 8px solid transparent; border-top-color: var(--ink); }
+
+#touch { position: fixed; inset: 0; pointer-events: none; z-index: 7; }
+#joy { position: absolute; left: 24px; bottom: 28px; width: 130px; height: 130px; border-radius: 50%; background: rgba(255, 255, 255, 0.25); border: 4px solid var(--ink); pointer-events: auto; }
+#joyKnob { position: absolute; left: 50%; top: 50%; width: 56px; height: 56px; margin: -28px; border-radius: 50%; background: var(--saffron); border: 4px solid var(--ink); }
+#tbtns { position: absolute; right: 14px; bottom: 20px; display: grid; grid-template-columns: repeat(3, 64px); gap: 9px; pointer-events: auto; }
+#tbtns button { width: 64px; height: 64px; border-radius: 50%; border: 4px solid var(--ink); background: var(--cream); font-weight: 800; font-size: 14px; }
+#tbtns button.small { height: 40px; border-radius: 20px; font-size: 12px; }
+#tbtns button.on { background: var(--saffron); }
+@media (max-width: 640px) { #minimap { width: 120px; height: 120px; } #plTitle { font-size: 18px; } #compassBox { top: 4px; } #compass { max-width: 56vw; } }
+
+/* hearts (top-left, under the plaque) */
+#hearts { position: absolute; left: 20px; top: 112px; display: flex; gap: 4px; font-size: 26px; filter: drop-shadow(0 2px 2px rgba(0, 0, 0, 0.6)); }
+#hearts span { display: inline-block; transition: transform 0.2s; }
+#hearts span.empty { opacity: 0.35; filter: grayscale(1); }
+#hearts.hit { animation: hearthit 0.45s; }
+#hearts span.pop { animation: heartpop 0.5s; }
+@keyframes hearthit { 20%, 60% { transform: translateX(-5px); } 40%, 80% { transform: translateX(5px); } }
+@keyframes heartpop { 40% { transform: scale(1.5); } }
+/* context prompt (bottom centre) */
+#prompt { position: absolute; left: 50%; bottom: 74px; transform: translateX(-50%); font-family: var(--title); font-size: 16px; font-weight: 700; color: var(--parch);
+  background: rgba(20, 14, 34, 0.7); border: 1px solid var(--gold); border-radius: 18px; padding: 4px 16px; letter-spacing: 0.04em; }
+#prompt:empty { display: none; }
+#prompt b { color: var(--gold); }
+/* red flash when hurt, and the faint screen */
+#hurt { position: fixed; inset: 0; pointer-events: none; z-index: 2; opacity: 0; background: radial-gradient(ellipse at 50% 50%, transparent 45%, rgba(190, 20, 30, 0.75)); transition: opacity 0.5s; }
+#hurt.on { opacity: 1; transition: none; }
+#faint { position: fixed; inset: 0; z-index: 26; display: flex; flex-direction: column; align-items: center; justify-content: center; pointer-events: none; opacity: 0; transition: opacity 1.2s;
+  background: radial-gradient(ellipse at 50% 50%, rgba(20, 10, 20, 0.85), #050308); color: #ece7dd; text-shadow: 0 2px 8px #000; }
+#faint.on { opacity: 1; }
+#faint .t1 { font-family: var(--title); font-size: clamp(30px, 4.5vw, 52px); letter-spacing: 0.16em; text-transform: uppercase; }
+#faint .t2 { margin-top: 10px; font-family: var(--title); font-size: 15px; letter-spacing: 0.3em; text-transform: uppercase; color: #c9a45c; }
+
+/* tracked mission objective (under the hearts) */
+#objective { position: absolute; left: 20px; top: 150px; max-width: 340px; color: var(--parch); text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8); }
+#objective:empty { display: none; }
+#objective .ob-t { font-family: var(--title); font-weight: 700; font-size: 15px; letter-spacing: 0.06em; color: #ffd98a; }
+#objective .ob-s { font-size: 14px; font-weight: 600; margin-top: 2px; }
+
+/* A concrete attack tell; quiet neutral crowds do not create permanent warnings. */
+#threat { position:absolute;left:20px;bottom:105px;max-width:340px;padding:10px 14px;border-left:2px solid #f59a65;background:rgba(37,26,26,.82);color:#ffe1be;font-size:13px;line-height:1.5;border-radius:3px 14px 14px 3px; }
+#threat:empty { display:none; }
+
+/* Quiet brass and ink framing lets the illuminated world carry the colour. */
+#plaque { max-width:min(31vw,400px);left:24px;top:22px;padding:0 16px 2px 12px;border-left:1px solid #c9aa71;border-radius:0;background:linear-gradient(90deg,#10282b99,transparent); }
+#plTitle { font-size:20px;font-weight:500;letter-spacing:.08em; }
+#plNe { font-size:15px;color:#d7ba83; }
+#plSub { font-size:11px;font-weight:500;letter-spacing:.18em; }
+#plStreet { font-size:12px;font-weight:500; }
+#mapbox { right:24px;top:22px; }
+#minimap { width:146px;height:146px;border:1px solid #b59e75;box-shadow:0 0 0 4px #12292b99,0 6px 25px #0005;filter:saturate(.4) brightness(.82); }
+#clockrow { margin-top:12px;gap:6px;padding:3px 9px;background:#10272bc9;color:#eadcc2;border:1px solid #baa27866;border-radius:2px;box-shadow:none;font-size:12px;font-weight:500; }
+#hearts { top:106px;left:26px;gap:7px;filter:drop-shadow(0 1px 3px #000); }
+#hearts span { font-size:0; }
+#hearts span:before { content:'♥';font-size:22px;color:#da9f83; }
+#hearts span.empty:before { content:'♡'; }
+#objective { top:142px;left:26px;max-width:300px; }
+#objective .ob-t { font-size:13px;letter-spacing:.09em;font-weight:500;color:#e2c38d; }
+#objective .ob-s { font-size:13px;font-weight:400;color:#e0e5dd;line-height:1.5; }
+#toast { border:1px solid #b8a07566;border-radius:2px;padding:7px 17px;background:#10272be8;color:#eadcc2;box-shadow:0 6px 20px #0003;font-size:15px;font-weight:500;transition:transform .3s ease,opacity .3s; }
+#prompt { border:1px solid #baa27888;border-radius:2px;background:#10272bd9;font-size:13px;font-weight:500;padding:8px 16px; }
+.bubble { border:1px solid #b8a07577;border-radius:4px;background:#142f32ed;color:#f1e3c9;font-size:16px;font-weight:500;padding:5px 12px;box-shadow:0 4px 15px #0004;transition:transform .25s ease,opacity .25s; }
+.bubble:after { border-top-color:#142f32ed; }
+#stamina .track { height:7px;border:1px solid #baa27888;background:#10272b;border-radius:2px; }
+#stamFill { background:linear-gradient(90deg,#74a89b,#d8c18b); }
+#hint { font-weight:400;font-size:12px;color:#e1e6d9; }
+@media(max-width:640px){#mapbox{right:14px;top:16px}#minimap{width:110px;height:110px}#plTitle{font-size:17px}#plaque{left:14px;max-width:43vw}#objective{left:16px;max-width:230px}#hearts{left:16px}}

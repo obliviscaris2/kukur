@@ -1,0 +1,25 @@
+[
+ {
+  "wait": 16
+ },
+ {
+  "eval": "(async () => { const m = await import('./src/core/settings.js'); return { pd: m.settings.get('prologueDone'), ls: localStorage.getItem('kukur.settings.v1') }; })()",
+  "label": "settings"
+ },
+ {
+  "eval": "__app.menu.cb.onPlay('Basantapur, Kathmandu'); 'go'"
+ },
+ {
+  "wait": 3
+ },
+ {
+  "eval": "__app.intro && __app.intro.constructor.name",
+  "label": "scene"
+ },
+ {
+  "wait": 4
+ },
+ {
+  "shot": "pro_night.png"
+ }
+]

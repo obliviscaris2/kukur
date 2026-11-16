@@ -1,0 +1,54 @@
+# Sound credits
+
+All sounds from [freesound.org](https://freesound.org) (previews). Thank you!
+
+- `pup_bark`: "Freesound - Puppy Bark by AntumDeluge" by AntumDeluge (CC0) — https://freesound.org/s/583142/
+- `pup_bark`: "Freesound - Small Dog Bark by SecureSubset" by SecureSubset (CC0) — https://freesound.org/s/800278/
+- `pup_bark`: "Freesound - Small Dog Barking by michorvath" by michorvath (CC0) — https://freesound.org/s/270586/
+- `pup_yelp`: "Freesound - bark yelp dog small int.flac by kyles" by kyles (CC0) — https://freesound.org/s/452180/
+- `pup_whine`: "Freesound - Chihuahua Puppy Whine by AustinXYZ" by AustinXYZ (CC0) — https://freesound.org/s/350593/
+- `pup_whine`: "Freesound - Dog Long Greeting Yelp by qubodup" by qubodup (CC0) — https://freesound.org/s/827539/
+- `pup_shake`: "Freesound - Dog Shake Off by qubodup" by qubodup (CC0) — https://freesound.org/s/827540/
+- `pup_pant`: "Freesound - Dog Panting Loop 2 by qubodup" by qubodup (CC0) — https://freesound.org/s/841349/
+- `stray_bark`: "Freesound - Barking 2.wav by Mrthenoronha" by Mrthenoronha (CC0) — https://freesound.org/s/420449/
+- `stray_bark`: "Freesound - Barking 5.wav by Mrthenoronha" by Mrthenoronha (CC0) — https://freesound.org/s/420452/
+- `stray_bark`: "Freesound - Single bark of a dog by exe2be" by exe2be (CC0) — https://freesound.org/s/535457/
+- `stray_growl`: "Freesound - Low dog growl by randbsoundbites" by randbsoundbites (CC0) — https://freesound.org/s/829986/
+- `stray_howl`: "Freesound - stray dog.wav by rsn267" by rsn267 (CC0) — https://freesound.org/s/276085/
+- `bell`: "Freesound - BELL 37 by ganapataye" by ganapataye (CC0) — https://freesound.org/s/837376/
+- `bell`: "Freesound - BELL 34 by ganapataye" by ganapataye (CC0) — https://freesound.org/s/837373/
+- `bell_big`: "Freesound - Big Bell by ManDaKi" by ManDaKi (CC0) — https://freesound.org/s/760049/
+- `bowl`: "Freesound - E flat Tibetan singing bowl struck by mttvn" by mttvn (CC0) — https://freesound.org/s/535950/
+- `conch`: "Freesound - Conch.wav by RoofDog" by RoofDog (CC0) — https://freesound.org/s/78974/
+- `gong`: "Freesound - Black Gong by sleepCircle" by sleepCircle (CC0) — https://freesound.org/s/473523/
+- `taiko`: "Freesound - taiko.wav by Anuj_Shrestha1" by Anuj_Shrestha1 (CC0) — https://freesound.org/s/486140/
+- `taiko`: "Freesound - crdn_cinematic_heavy_drums - 14.wav by choomaque-crispydinner" by choomaque-crispydinner (CC0) — https://freesound.org/s/577408/
+- `boom`: "Freesound - Sound Design Elements Impact SFX PS 017 by AudioPapkin" by AudioPapkin (CC0) — https://freesound.org/s/755054/
+- `chant`: "Freesound - Buddist chants Khari Kola monastery Nepal by wielkimi" by wielkimi (CC0) — https://freesound.org/s/456914/
+- `crows`: "Freesound - Crows of Dhaka Kaak.wav by talatahmed" by talatahmed (CC0) — https://freesound.org/s/452714/
+- `crow`: "Freesound - Crow Call by qubodup" by qubodup (CC0) — https://freesound.org/s/813114/
+- `pigeons`: "Freesound - Pigeon, Flies Away, Flapping Wings by Kinoton" by Kinoton (CC0) — https://freesound.org/s/689998/
+- `city`: "Freesound - Indian Traffic ambience.mp3 by rsn267" by rsn267 (CC0) — https://freesound.org/s/273962/
+- `city_busy`: "Freesound - India Streets Bangalore City 2 (Traffic, Pedestrians, Voices) by Alcappuccino" by Alcappuccino (CC0) — https://freesound.org/s/263631/
+- `scooter_pass`: "Freesound - matic motorcycle passing by.wav by marbunpol" by marbunpol (CC0) — https://freesound.org/s/584302/
+- `horn`: "Freesound - honkhonk.wav by Mihacappy" by Mihacappy (CC0) — https://freesound.org/s/827215/
+- `horn`: "Freesound - BEEP BEEP.mp3 by Anzbot" by Anzbot (CC0) — https://freesound.org/s/563346/
+- `horn`: "Freesound - Honk Honk High Pitched Car Horn by FartMuffin" by FartMuffin (CC0) — https://freesound.org/s/721413/
+- `horn_bus`: "Freesound - Klakson Telolet (Indonesian Big Bus Custom Horn) by redafs" by redafs (CC0) — https://freesound.org/s/371450/
+- `rain`: "Freesound - rain_loop.wav by Krokulator" by Krokulator (CC0) — https://freesound.org/s/679176/
+- `wind`: "Freesound - Wind Through Leaves by craigsmith" by craigsmith (CC0) — https://freesound.org/s/817192/
+- `thunder`: "Freesound - Booming Thunder in Distance by Fugeni" by Fugeni (CC0) — https://freesound.org/s/559804/
+- `thunder`: "Freesound - thunder5.ogg by Josh74000MC" by Josh74000MC (CC0) — https://freesound.org/s/477839/
+- `splash`: "Freesound - Quick Splash (dropping grapes into a glass of water) by asherkaye2" by asherkaye2 (CC0) — https://freesound.org/s/538143/
+- `paddle`: "Freesound - fast water flutter by adviseme333" by adviseme333 (CC0) — https://freesound.org/s/679400/
+- `smash`: "Freesound - Breaking pot short by anna_bliss" by anna_bliss (CC0) — https://freesound.org/s/810043/
+- `smash`: "Freesound - Tile Breaking by Fission9" by Fission9 (CC0) — https://freesound.org/s/583310/
+- `smash`: "Freesound - Plate Break 1.wav by jc.sg" by jc.sg (CC0) — https://freesound.org/s/565642/
+- `crate`: "Freesound - Crate Break 4.wav by kevinkace" by kevinkace (CC0) — https://freesound.org/s/66780/
+- `crate`: "Freesound - Wood Break.wav by Deathscyp" by Deathscyp (CC0) — https://freesound.org/s/443293/
+- `clonk`: "Freesound - found trashbin plastic hit.wav by apinasaundi" by apinasaundi (CC0) — https://freesound.org/s/405655/
+- `clonk`: "Freesound - wooden-crate-impact2.wav by DeltaCode" by DeltaCode (CC0) — https://freesound.org/s/667654/
+- `whoosh`: "Freesound - swoosh_v2 by migoreng1" by migoreng1 (CC0) — https://freesound.org/s/786514/
+- `whoosh`: "Freesound - whoosh_short_mid.wav by DJT4NN3R" by DJT4NN3R (CC0) — https://freesound.org/s/449996/
+- `pickup`: "Freesound - Item Pickup Chime by Irolan" by Irolan (CC0) — https://freesound.org/s/735168/
+- `dig`: "Freesound - Digging in wet course sand (1) by f3bbbo" by f3bbbo (CC0) — https://freesound.org/s/651292/

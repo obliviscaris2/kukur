@@ -1,0 +1,48 @@
+/** Painted fairy-tale Kathmandu: warm coats, welcoming streets, luminous plants and windborne blossom. */
+export const ART = {
+  subjects: {
+    player: { fill: [0.035,0.09], key: 0.12, rim: [0.025,0.065], inkPixels: 0, roughness: 0.85 },
+    dog: { fill: [0.025,0.07], key: 0.09, rim: [0.02,0.045], inkPixels: 0, roughness: 0.88 },
+    npc: { fill: [0.025,0.07], key: 0.08, rim: [0.015,0.035], inkPixels: 0, roughness: 0.82 },
+    detail: { fill: [0.19,0.3], key: 0.05, rim: [0.002,0.008], roughness: 0.5 },
+  },
+  lightRamp: { samples: 128, floor: 0.12, curve: 0.85 },
+  surfaceRim: 0.25,
+  worldFill: [0.10, 0.16],
+  facade: { ink:'#594a3e',stroke:0.5,saturation:0.86,weathering:0.02,grain:3 },
+  rim: { day: '#ffe5b2', night: '#b8dce5' },
+  ink: '#242b32',
+  contactShadow: { colour: '#17232b', resolution: 32, falloff: 2 },
+  cloudShadow: 0.12, wetDarken: 0.06,
+  nightCloudBrightness: 0.42,
+  windStreaks: { capacity:16,segments:20,width:0.018,opacity:0.11,maxOpacity:0.21,loopChance:0.08,loopRadius:0.7,length:[3,6],colour:'#bfd2cf' },
+  vignette: { base: 0.025, night: 0.04, storm: 0.04, sniff: 0.14 },
+  emissive: { windows: 0.32, signs: 0.65, signFloor: 0.025 },
+  lanterns: {
+    radius: 85, lightRadius: 9, lightPower: 1.35,
+    bulbs: ['#efbe91','#c4d7ca','#e0c1c9','#e9d6a4','#c1c5d5','#dbac88'],
+    signs: ['#d99091','#a6c7c8','#e6c791','#a9bd9e','#d6a580','#b5adc8'],
+    bulbDay: 0.65, bulbNight: 1.35, signDay: 0.6, signNight: 0.85, haloOpacity: 0.55, bulbHalo: 0.65, signHalo: 1.7,
+  },
+  foliage: {
+    peepal: ['#2d655e','#599778','#8cbb82','#cfda92','#e7c67b'],
+    ashoka: ['#28534e','#497e66','#91b57b'],
+    jacaranda: ['#3c4c9b','#5168c4','#628fd0','#877acb','#6ab7bd'],
+    bougainvillea: ['#3b7563','#b66d9b','#e09db3','#cb8cad','#e4b4c1'],
+    lime: ['#4f8462','#83aa67','#c7d28a'],
+    leaves: ['#839366','#a2a778','#c1af81','#b89a72','#9d805b','#ae936b'],
+  },
+  petals: {
+    capacity: { low: 80, medium: 128, high: 176 }, ambient: 0.22, flowering: 0.75, rainReduction: 0.75,
+    colours: ['#eedcde','#e5d6df','#f4e8dd','#d4c6dd'],
+    radius: 17, sourceRadius: 3, height: [2.5,6], size: [0.055,0.105], life: [16,26], fall: [0.16,0.3],
+    wind: 0.22, sway: 0.18, settle: 2.4, fadeSeconds: 1.5, nearFade: [0.65,1.6],
+  },
+  sky: [
+    {e:-.35,top:'#1d304f',hor:'#637e91',fog:'#688b99',sun:'#c7dce8',sunI:.72,hs:'#a7bdcf',hg:'#77718c',hI:1.1},
+    {e:-.06,top:'#617d9d',hor:'#e4b9b3',fog:'#b4b9bd',sun:'#f6d3b9',sunI:1.0,hs:'#b5cad5',hg:'#a29398',hI:1.2},
+    {e:.05,top:'#86b4ce',hor:'#ffe0b6',fog:'#c7d3c5',sun:'#ffe7bc',sunI:1.55,hs:'#c5dae0',hg:'#b4a58b',hI:1.3},
+    {e:.3,top:'#75b5cf',hor:'#d5e6d1',fog:'#c2d8cc',sun:'#ffe8c5',sunI:1.65,hs:'#c3dce5',hg:'#aaac91',hI:1.25},
+    {e:1,top:'#74b4d2',hor:'#e0ead4',fog:'#cadfd2',sun:'#fff0d2',sunI:1.55,hs:'#c9e2eb',hg:'#b7b69c',hI:1.3},
+  ],
+};

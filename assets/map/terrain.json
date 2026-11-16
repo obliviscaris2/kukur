@@ -1,0 +1,12 @@
+{
+ "x0": -4785.0,
+ "z0": -6700.0,
+ "cell": 24.0,
+ "w": 784,
+ "h": 627,
+ "scale": 0.1,
+ "zero": 518,
+ "minM": 1260.1,
+ "maxM": 2078.8,
+ "source": "Terrarium DEM (SRTM et al.) via AWS Open Data"
+}

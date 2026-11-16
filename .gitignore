@@ -1,0 +1,14 @@
+node_modules/
+pipeline/.cache/
+*.log
+.DS_Store
+tools/snaps/out/
+dist/
+.aws/
+.codex/
+.agents/
+.env
+.env.*
+.openai/
+AGENTS.md
+**/AGENTS.md

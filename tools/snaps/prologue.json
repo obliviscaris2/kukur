@@ -1,0 +1,11 @@
+[
+  { "wait": 16 },
+  { "eval": "localStorage.removeItem('kukur.settings.v1'); __app.menu.cb.onPlay('Basantapur, Kathmandu'); 'prologue'" },
+  { "wait": 7 }, { "shot": "pro_tihar.png" },
+  { "eval": "(() => { const A = __app, a = A.intro.aama.root.position; A.pup.placeAt(a.x + 1, a.z + 1, 0, A.world); return 'near aama: ' + A.state; })()", "label": "go" },
+  { "wait": 1.5 }, { "eval": "document.querySelector('#objective').textContent", "label": "objective" },
+  { "shot": "pro_feast.png" },
+  { "eval": "__app.intro.skip(); 'skipped'" }, { "wait": 5 },
+  { "eval": "({ state: __app.state, tracked: __app.game.missions.activeId, objective: document.querySelector('#objective').textContent, filter: document.querySelector('#game').style.filter })", "label": "after" },
+  { "shot": "pro_after.png" }
+]

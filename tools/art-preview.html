@@ -1,0 +1,58 @@
+<!doctype html>
+<!-- Real in-game captures: earlier game and current painted treatment, plus the temple depth-flicker fix. -->
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>KUKUR · Art comparison</title>
+  <style>
+    *{box-sizing:border-box}body{margin:0;background:#10212b;color:#eee5d5;font:16px/1.6 system-ui,sans-serif}main{max-width:1120px;margin:auto;padding:32px 24px 48px}header{display:flex;gap:24px;align-items:center;justify-content:space-between;margin-bottom:24px}.eyebrow{margin:0;color:#d7af70;letter-spacing:.16em;font-size:12px;font-weight:750}h1{font:500 clamp(26px,4vw,38px)/1.2 Georgia,serif;margin:8px 0}p{color:#b6c6c8;margin:8px 0}a{color:#e8b76e}a.play{background:#e6b267;color:#14222b;padding:10px 20px;border-radius:7px;text-decoration:none;font-weight:700;white-space:nowrap}.tabs{display:flex;gap:8px;flex-wrap:wrap;margin:22px 0 16px}button{font:inherit;cursor:pointer;color:#c6d2d2;background:#1b303a;border:1px solid #40535b;border-radius:6px;padding:7px 16px}button[aria-pressed=true]{color:#14222b;border-color:#e6b267;background:#e6b267}.frame{position:relative;aspect-ratio:16/9;overflow:hidden;border:1px solid #56666a;border-radius:10px;background:#152a34;--split:50%}.frame img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain}.original{clip-path:inset(0 calc(100% - var(--split)) 0 0)}.divider{position:absolute;inset:0 auto 0 var(--split);width:2px;background:#fff0ce;pointer-events:none}.tag{position:absolute;top:14px;background:#10212bdd;color:#fff0d5;border:1px solid #aebdb955;padding:3px 12px;border-radius:4px;font-size:12px;letter-spacing:.04em}.tag.left{left:14px}.tag.right{right:14px}.slider{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:18px;margin:15px 0 24px}.slider input{width:100%;accent-color:#e6b267;cursor:ew-resize}.slider span{font-size:13px;color:#b6c6c8}.note{border-top:1px solid #31454e;padding-top:18px;max-width:860px;font-size:14px}.cast{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:24px}.cast img{display:block;width:100%;border-radius:7px;border:1px solid #40535b}.cast figure{margin:0}.cast figcaption{color:#b6c6c8;font-size:13px;padding-top:6px}:focus-visible{outline:3px solid #d6bc8b;outline-offset:4px}@media(max-width:650px){main{padding:22px 14px}header{align-items:flex-start;flex-direction:column;gap:12px}.cast{grid-template-columns:1fr}.slider{gap:10px}.tabs button{padding:6px 11px}}
+  </style>
+</head>
+<body>
+<main>
+  <header><div><p class="eyebrow">KUKUR · ART REVIEW</p><h1>A warmer world for a little dog.</h1><p>Painted streets, glowing gardens and a pup you can see.</p></div><a class="play" href="../?noprologue">Play KUKUR ↗</a></header>
+  <nav class="tabs" aria-label="Lighting scene"></nav>
+  <div class="frame" id="frame">
+    <img id="updated" src="snaps/out/storybook-review/swayambhu_day.png" alt="Updated Swayambhu with painted foliage and soft layered hills">
+    <img id="original" class="original" src="snaps/out/magic-review/after-swayambhu_day.png" alt="Earlier Swayambhu game view">
+    <div class="divider"></div><span class="tag left">EARLIER GAME</span><span class="tag right">CURRENT</span>
+  </div>
+  <div class="slider"><span>Current</span><input id="split" type="range" min="0" max="100" value="50" aria-label="Earlier and current game image divider"><span>Earlier</span></div>
+  <p class="note" id="sceneNote">Saved captures from the same in-game review locations. Painted foliage and softer hills bring more colour and depth to the valley. Lighting, actors and wind differ between captures.</p>
+  <div class="cast">
+    <figure><img src="snaps/out/storybook-review/day_street.png" alt="Painted Kathmandu street with warm brick, teal shutters and a russet dog"><figcaption>Daylight: one palette across the dog, buildings and paving.</figcaption></figure>
+    <figure><img src="snaps/out/storybook-review/night_street.png" alt="Readable dog and street at night"><figcaption>Night: blue ambient light and warm windows keep paths visible.</figcaption></figure>
+    <figure><img loading="lazy" src="snaps/out/storybook-review/dusk_portrait.png" alt="The local street pup with a warm brown coat and ivory muzzle"><figcaption>Khairey’s warmer coat against the pale stone.</figcaption></figure>
+    <figure><img loading="lazy" src="snaps/out/storybook-review/night_people.png" alt="Nepali street characters under the revised night lighting"><figcaption>The street cast uses the same soft light.</figcaption></figure>
+    <figure><img loading="lazy" src="snaps/out/storybook-review/jacaranda_night.png" alt="Painted blue jacaranda foliage with glowing buds"><figcaption>Blue leaves, warm buds and small drifting lights in Patan.</figcaption></figure>
+    <figure><img loading="lazy" src="snaps/out/storybook-review/bhaktapur_close.png" alt="Kedarnath temple steps with warm diyos in Bhaktapur"><figcaption>Painted stone, clay and timber at Kedarnath temple, Bhaktapur.</figcaption></figure>
+  </div>
+  <p class="note">Real gameplay captures on the low preset. Intel HD 4600 busy-street samples: 27.5 FPS in a 720p window; about 15 FPS in the separate full-desktop run. A consistent 30 FPS remains unresolved on this GPU. <a href="../docs/ART_DIRECTION.md">Art direction and performance notes</a> · <a href="../pipeline/art/README.md">Painted asset sources and prompts</a></p>
+</main>
+<script>
+  const scenes=[
+    ['swayambhu_day','Swayambhu'],
+    ['swayambhu_night','Hill at night'],
+    ['peepal_day','Peepal'],
+    ['jacaranda_day','Jacaranda'],
+    ['jacaranda_night','Moonlight'],
+    ['pashupati_close','Chabahil temple'],
+    ['bhaktapur_close','Bhaktapur'],
+    ['temple_floor','Floor glitch']
+  ];
+  const tabs=document.querySelector('.tabs'),frame=document.querySelector('#frame'),original=document.querySelector('#original'),updated=document.querySelector('#updated'),split=document.querySelector('#split'),note=document.querySelector('#sceneNote');
+  for(const[id,label]of scenes){
+    const button=document.createElement('button');button.textContent=label;button.type='button';button.setAttribute('aria-pressed',id==='swayambhu_day');
+    button.addEventListener('click',()=>{
+      for(const b of tabs.children)b.setAttribute('aria-pressed',b===button);
+      original.src=id==='temple_floor'?'snaps/out/storybook-review/before-temple_floor.png':`snaps/out/magic-review/after-${id}.png`;
+      updated.src=`snaps/out/storybook-review/${id}.png`;
+      original.alt=`Earlier ${label.toLowerCase()} game view`;updated.alt=`Current ${label.toLowerCase()} game view`;
+      note.textContent=id==='temple_floor'?'Pashupatinath: the overlapping brick and stone faces caused striped depth flicker. The rebuilt steps have separate surfaces and unchanged walkable heights.':'Saved captures from the same in-game review locations. Lighting, actors and wind differ between captures; the Chabahil approach shows Bhairav Mandir near Pashupati.';
+    });tabs.append(button);
+  }
+  split.addEventListener('input',()=>frame.style.setProperty('--split',`${split.value}%`));
+</script>
+</body>
+</html>

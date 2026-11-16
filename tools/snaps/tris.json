@@ -1,0 +1,6 @@
+[
+  { "wait": 16 },
+  { "eval": "__app.menu.cb.onPlay('Basantapur, Kathmandu'); window.__sk = setInterval(() => __app.intro && __app.intro.skip(), 200); 'go'" },
+  { "wait": 12 },
+  { "eval": "(() => { clearInterval(window.__sk); const A = __app, r = A.renderer.renderer.info.render; const m = () => new Promise((res) => requestAnimationFrame(() => requestAnimationFrame(() => res(r.triangles)))); const out = {}; return (async () => { out.all = await m(); for (const t of A.world.streamer.tiles.values()) if (t.relief) t.relief.userData.v = t.relief.visible, t.relief.visible = false; out.noRelief = await m(); A.world.grass.grass.visible = A.world.grass.flowers.visible = false; out.noGrass = await m(); A.npcs.people.forEach((p) => p.root.visible = false); out.noPeople = await m(); for (const t of Object.values(A.traffic.types)) t.paint.visible = t.trim.visible = false; out.noTraffic = await m(); A.scene.traverse((o) => { if (o.isInstancedMesh && /tree/.test(o.material.customProgramCacheKey?.() || '')) o.visible = false; }); out.noTrees = await m(); return out; })(); })()", "label": "tris" }
+]
